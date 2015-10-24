@@ -1,5 +1,8 @@
 module.exports = function(grunt){
 	grunt.initConfig({
+		config: {
+			client_dir: 'client/'
+		},
 		watch: {
 			options: {
 				livereload: true
@@ -11,30 +14,35 @@ module.exports = function(grunt){
 			},
 			js: {
 				files: [
-					'js/**/*.js'
+					'client/js/src/**/*.js'
 				],
 				tasks: [
-					'babel'
+					'browserify'
 				]
 			},
-			files: [
-				'**/*.{html,js}'
-			]
-		},
-		connect: {
-			server: {
-				options: {
-					livereload: true,
-					open: true
-				}
+			bower: {
+				files: ['bower_components'],
+				tasks: ['wiredep']
 			}
 		},
-		babel: {
-			dist: {
+		browserify: {
+			dev: {
 				files: {
-					'dist/app.js':'js/app.js'
+					'client/js/app.js': [
+						'client/js/src/roles/role.js',
+						'client/js/src/router.js',
+						'client/js/src/app.js'
+					]
 				}
 			}
+		},
+		wiredep: {
+			js: {
+				src: ["client/index.html"]
+			}
+		},
+		grunt: {
+			files: ['Gruntfile.js']
 		}
 	})
 
