@@ -1,26 +1,31 @@
-var viewContainer = jQuery('.view');
+define([
+	"jquery",
+	"backbone",
+	"roles/controller/role"
+], function($, Backbone, RoleController){
 
-var router = Backbone.Router.extend({
-	
-	routes: {
-		'/' : 'roles',
-		'/interviews' : 'interviews',
-		'/agents' : 'agents'
-	},
+	var router = Backbone.Router.extend({
+		
+		routes: {
+			'' : 'roles',
+			'roles' : 'roles',
+			'interviews' : 'interviews',
+			'agents' : 'agents'
+		},
 
-	roles: function(){
-		console.log('here');
-		var RolesView = new JobBuddy.Views.RoleListContainer();
-		viewContainer.append(RolesView.render());
-	},
-	
-	interviews: function(){
+		roles: function(){
+			console.log("roles");
+			RoleController.init();
+		},
+		
+		interviews: function(){
+			console.log("interviews");
+		},
+		
+		agents: function(){
+			console.log("agents");
+		}
+	});
 
-	},
-	
-	agents: function(){
-
-	}
+	return router;
 });
-
-module.exports = router;

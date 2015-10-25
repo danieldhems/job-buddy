@@ -5,18 +5,10 @@ window.JobBuddy = {
 	Router: {}
 };
 
-jQuery(document).ready( function($){
+require(["jquery", "backbone", "router"], function($, Backbone, Router){
 
-	// JobBuddy.Router = require('./router.js');
-	// var Router = new JobBuddy.Router();
+	var Router = new Router();
 
-	Backbone.history.start({pushState:true});
-})
+	Backbone.history.start();
 
-tim
-contract FE
-07734694696
-urgent start, as soon as monday
-
-kate / accenture?
-02075494041
+});
