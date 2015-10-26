@@ -9,6 +9,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static(path.join(__dirname,'../client')));
 
+
+
 // Set root URL for API endpoints
 app.use('/api/roles', require('./api/roles.js'));
 app.use('/api/agents', require('./api/agents.js'));

@@ -5,30 +5,32 @@ var api = {
 	create: function(req, res){
 		var data = req.body;
 		var table = req.params.table
-		db.query('INSERT INTO `roles` SET ?', [table, data], function(err, result){
+		db.query('INSERT INTO `interviews` SET ?', [table, data], function(err, result){
 			if(err) throw new Error(err);
 			if(result.affectedRows===1) res.send(200, result.insertId);
 		});
 	},
 	read: function(req, res){
 		var table = req.params.table;
-		console.log(table);
 		if(req.params.id){
 			var id = req.params.id;
 			var query = "\
 				SELECT *\
-				FROM `roless'\
-				WHERE `roles`.`id` = ?\
-				LEFT JOIN `agents` ON `roles`.`agent_id` = `agents`.`id\
+				FROM `interviews` i\
+				LEFT JOIN `agents` a\
+					ON i.agent_id = a.id\
+				LEFT JOIN `roles` r\
+					ON i.role_id = r.id\
+				WHERE i.id = ?\
 			";
-			db.query(query, [table, id], function(err, rows){
+			db.query(query, [id], function(err, rows){
 				if(err) throw new Error(err);
 				res.json(rows);
 			});
 		} else {
 			var query = "\
 				SELECT *\
-				FROM `ROLES\
+				FROM `interviews`\
 			";
 			db.query(query, [table], function(err, rows){
 				if(err) throw new Error(err);
@@ -56,11 +58,11 @@ var api = {
 };
 
 // Set API CRUD endpoints
-router.get('/:table/', api.read);
-router.get('/:table/:id', api.read);
-router.post('/:table/', api.create);
-router.put('/:table/:id', api.update);
-router.patch('/:table/:id', api.update);
-router.delete('/:table/:id', api.destroy);
+router.get('/', api.read);
+router.get('/:id', api.read);
+router.post('/', api.create);
+router.put('/:id', api.update);
+router.patch('/:id', api.update);
+router.delete('/:id', api.destroy);
 
 module.exports = router;

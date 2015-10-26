@@ -4,7 +4,6 @@ var router = require('express').Router();
 var api = {
 	create: function(req, res){
 		var data = req.body;
-		var table = req.params.table
 		db.query('INSERT INTO `roles` SET ?', [data], function(err, result){
 			if(err) throw new Error(err);
 			if(result.affectedRows===1) res.send(200, result.insertId);
@@ -27,7 +26,7 @@ var api = {
 			WHERE roles.archived = 0\
 		";
 		if(req.params.id){
-			query += " AND `id` = " + req.params.id;
+			query += " AND roles.id = " + req.params.id;
 		}
 		db.query(query, function(err, rows){
 			if(err) throw new Error(err);
@@ -37,7 +36,6 @@ var api = {
 	update: function(req, res){
 		var data = req.body;
 		var id = req.params.id;
-		var table = req.params.table;
 		db.query('UPDATE `roles` SET ? WHERE `id` = ?', [data, id], function(err, result){
 			if(err) throw new Error(err);
 			console.log(result);
@@ -45,7 +43,6 @@ var api = {
 	},
 	destroy: function(req, res){
 		var id = req.params.id;
-		var table = req.params.table;
 		db.query('DROP * FROM `roles` WHERE id = ?', [id], function(err, rows){
 			if(err) throw new Error(err);
 			console.log(rows);
@@ -53,7 +50,7 @@ var api = {
 	}
 };
 
-// Set API CRUD endpoints
+// Set API CRnUD endpoints
 router.get('/', api.read);
 router.get('/:id', api.read);
 router.post('/', api.create);
