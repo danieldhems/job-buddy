@@ -1,16 +1,16 @@
 define([
 	"jquery",
 	"backbone",
-	"roles/collection/role",
-	"roles/views/role_list_container"
-], function($, Backbone, RoleCollection, RoleListContainer){
+	"collections/interview",
+	"views/interview/interview_list_container"
+], function($, Backbone, InterviewCollection, InterviewListContainer){
 	
 	return {
 		
 		// init
 		init: function(){
 			var viewContainer = $(".view");
-			viewContainer.append(new RoleListContainer().render());
+			viewContainer.append(new InterviewListContainer().render());
 		}
 
 		// Add role

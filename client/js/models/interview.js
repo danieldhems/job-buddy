@@ -1,10 +1,10 @@
 define([
 	"backbone",
-	"roles/collection/role"
-], function(Backbone, RoleCollection){
+	"collections/interview"
+], function(Backbone, Collection){
 
 	var model = Backbone.Model.extend({
-		collection: RoleCollection,
+		collection: Collection,
 		defaults: {
 			title:"Not specified",
 			client:"Not specified",

@@ -1,6 +1,6 @@
 define([
 	"backbone",
-	"roles/views/role_list"
+	"views/role_list"
 ], function(Backbone, RoleList){
 	var view = Backbone.View.extend({
 		tagName: 'div',

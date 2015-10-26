@@ -1,8 +1,10 @@
 define([
 	"jquery",
 	"backbone",
-	"roles/controller/role"
-], function($, Backbone, RoleController){
+	"controllers/role",
+	"controllers/interview",
+	"controllers/agent"
+], function($, Backbone, RoleController, InterviewController, AgentController){
 
 	var router = Backbone.Router.extend({
 		
@@ -20,10 +22,12 @@ define([
 		
 		interviews: function(){
 			console.log("interviews");
+			InterviewController.init();
 		},
 		
 		agents: function(){
 			console.log("agents");
+			AgentController.init();
 		}
 	});
 
