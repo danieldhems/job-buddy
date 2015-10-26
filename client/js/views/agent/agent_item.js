@@ -5,12 +5,11 @@ define([
 	var view = Backbone.View.extend({
 		tagName: 'li',
 		template: _.template("\
-			<a href=\"#\" class=\"role-title\"><%= data.title %></a> / \
-			<span class=\"role-salary\"><%= data.salary || \"salary not specified\" %></span><br>\
-			<span class=\"role-client\"><%= data.client %></span><br>\
-			<span class=\"role-location\"><%= data.location || \"location not specified\" %></span><br>\
-			<span class=\"role-agent\"><%= data.agent_name %></span><br><br>\
-			<span class=\"role-status\"><%= data.interview_stage > 0 %></span><br><br>\
+			<span class=\"agent-name\"><%= data.name || \"salary not specified\" %></span><br>\
+			<span class=\"agent-company\"><%= data.company %></span><br>\
+			<span class=\"agent-phone_number\"><%= data.phone_number || \"location not specified\" %></span><br>\
+			<span class=\"agent-mobile_number\"><%= data.mobile_number %></span><br><br>\
+			<span class=\"agent-email\"><%= data.email %></span><br><br>\
 		"),
 		render: function(){
 			this.$el.html( this.template({data:this.model}) );

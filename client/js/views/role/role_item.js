@@ -10,7 +10,7 @@ define([
 			<span class=\"role-client\"><%= data.client %></span><br>\
 			<span class=\"role-location\"><%= data.location || \"location not specified\" %></span><br>\
 			<span class=\"role-agent\"><%= data.agent_name %></span><br><br>\
-			<span class=\"role-status\"><%= data.interview_stage > 0 %></span><br><br>\
+			<span class=\"role-status\">Interviewing: <%= data.interview_stage > 0 ? \"Yes\" : \"no\" %></span><br><br>\
 		"),
 		render: function(){
 			this.$el.html( this.template({data:this.model}) );

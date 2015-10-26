@@ -10,7 +10,7 @@ define([
 		// init
 		init: function(){
 			var viewContainer = $(".view");
-			viewContainer.append(new InterviewListContainer().render());
+			viewContainer.html(new InterviewListContainer().render());
 		}
 
 		// Add role

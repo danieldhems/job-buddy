@@ -10,7 +10,7 @@ define([
 		// init
 		init: function(){
 			var viewContainer = $(".view");
-			viewContainer.append(new RoleListContainer().render());
+			viewContainer.html(new RoleListContainer().render());
 		}
 
 		// Add role

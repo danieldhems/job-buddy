@@ -10,7 +10,7 @@ define([
 		// init
 		init: function(){
 			var viewContainer = $(".view");
-			viewContainer.append(new AgentListContainer().render());
+			viewContainer.html(new AgentListContainer().render());
 		}
 
 		// Add agent
