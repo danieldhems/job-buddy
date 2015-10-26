@@ -18,3 +18,7 @@ see instantly when you are available for interview, based on:
 role workflow
 manage roles from when they hit your inbox right through to offer being made
 - role status (jsut in, discussed, cv put forward, interviews)
+
+agent / client social data
+- use social APIs to pull in supporting data for agents and company contacts
+(good for putting pics to faces and facilitating research of people the user will meet)
