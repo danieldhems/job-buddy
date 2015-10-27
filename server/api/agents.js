@@ -10,27 +10,18 @@ var api = {
 		});
 	},
 	read: function(req, res){
+		var query = "\
+			SELECT *\
+			FROM `agents`\
+		";
 		if(req.params.id){
 			var id = req.params.id;
-			var query = "\
-				SELECT *\
-				FROM `agents`\
-				WHERE agents.id = ?\
-			";
-			db.query(query, [id], function(err, rows){
-				if(err) throw new Error(err);
-				res.json(rows);
-			});
-		} else {
-			var query = "\
-				SELECT *\
-				FROM `agents`\
-			";
-			db.query(query, function(err, rows){
-				if(err) throw new Error(err);
-				res.json(rows);
-			});
+			query += " WHERE agents.id = ?";
 		}
+		db.query(query, [id], function(err, rows){
+			if(err) throw new Error(err);
+			res.json(rows);
+		});
 	},
 	update: function(req, res){
 		var data = req.body;

@@ -7,15 +7,14 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(express.static(path.join(__dirname,'../client')));
+app.use(express.static(path.join(__dirname,'../client')));	
 
-
-
-// Set root URL for API endpoints
+// Configure API endpoints
 app.use('/api/roles', require('./api/roles.js'));
 app.use('/api/agents', require('./api/agents.js'));
 app.use('/api/interviews', require('./api/interviews.js'));
 
+// Configure base URL for home page
 app.get('/', function(req, res){
 	res.sendFile(path.join(__dirname, '../client/index.html'));
 });
