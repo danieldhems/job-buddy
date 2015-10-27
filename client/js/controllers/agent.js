@@ -2,27 +2,57 @@ define([
 	"jquery",
 	"backbone",
 	"collections/agent",
-	"views/agent/agent_list_container"
-], function($, Backbone, AgentCollection, AgentListContainer){
+	"models/agent",
+	"views/agent/agent_list_container",
+	"views/agent/agent_form_new",
+	"views/agent/agent_button_new",
+], function($, Backbone, AgentCollection, AgentModel, AgentListContainer, AgentFormNew, ButtonNew){
 	
-	return {
+	var viewContainer = $(".view");
+	
+	_.extend(AgentListContainer, Backbone.Events);
+	_.extend(AgentFormNew, Backbone.Events);
+	_.extend(ButtonNew, Backbone.Events);
+
+
+	AgentFormNew.on('save', this.save);
 		
-		// init
-		init: function(){
-			var viewContainer = $(".view");
-			viewContainer.html(new AgentListContainer().render());
-		}
+	// init
+	this.init = function(){
 
-		// Add agent
+		var btn = new ButtonNew();
+		btn.on('openForm', this.openForm, this);
 		
-		// Edit agent
+		viewContainer.empty();
+		viewContainer.append(new AgentListContainer().render());
+		viewContainer.append(btn.render());
+	}
 
-		// Remove agent
+	// Save new agent
+	this.save = function(data){
+		var agent = new AgentModel(data);
+		agent.save({
+			success: function(model, response){
+				AgentCollection.add(agentModel);
+			}
+		})
+	}
 
-		// Add spec
+	// Open agent form
+	this.openForm = function(){
+		console.log(1);
+		var form = new AgentFormNew();
+		viewContainer.append(form.render());
+	}
 
-		// Get spec
+	// Edit agent
 
-	};
+	// Remove agent
+
+	// Add spec
+
+	// Get spec
+
+	return this;
 
 });

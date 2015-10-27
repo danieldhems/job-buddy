@@ -4,6 +4,7 @@ define([
 ], function(Backbone, Collection){
 
 	var model = Backbone.Model.extend({
+		urlRoot: '/api/agents',
 		collection: Collection,
 		defaults: {
 			

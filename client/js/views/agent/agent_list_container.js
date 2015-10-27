@@ -1,7 +1,7 @@
 define([
 	"backbone",
 	"views/agent/agent_list"
-], function(Backbone, ListView){
+], function(Backbone, ListView, ButtonView){
 	var view = Backbone.View.extend({
 		tagName: 'div',
 		className: 'listContainer',
