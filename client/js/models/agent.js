@@ -1,6 +1,6 @@
 define([
 	"backbone",
-	"collections/agent"
+	"collections/list"
 ], function(Backbone, Collection){
 
 	var model = Backbone.Model.extend({

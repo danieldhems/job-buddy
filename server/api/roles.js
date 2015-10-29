@@ -50,7 +50,7 @@ var api = {
 	}
 };
 
-// Set API CRnUD endpoints
+// Set API CRUD endpoints
 router.get('/', api.read);
 router.get('/:id', api.read);
 router.post('/', api.create);

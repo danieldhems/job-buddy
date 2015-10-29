@@ -1,23 +1,23 @@
 define([
 	"backbone",
 	"collections/list",
-	"models/agent",
-	"views/agent/agent_item"
-], function(Backbone, Collection, Model, ItemView){
+	"views/item"
+], function(Backbone, Collection, ItemView){
 
 	var view = Backbone.View.extend({
 		tagName: 'ul',
-		initialize: function(){
+		initialize: function(opts){
 
 			_.extend(this, Backbone.Events);
 
+			this.collectionName = opts.route;
 			this.listenTo( this.collection, 'add', this.append );
 			
 			this.collection.fetch();
 		},
 		append: function(model){
 
-			var itemView = new ItemView({model:model});
+			var itemView = new ItemView({model:model,collectionName:this.collectionName});
 			this.$el.append( itemView.render() );
 		
 			this.render();

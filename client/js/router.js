@@ -1,33 +1,17 @@
 define([
 	"jquery",
 	"backbone",
-	"controllers/role",
-	"controllers/interview",
-	"controllers/agent"
-], function($, Backbone, RoleController, InterviewController, AgentController){
+	"controllers/list"
+], function($, Backbone, ListController){
 
 	var router = Backbone.Router.extend({
 		
 		routes: {
-			'' : 'roles',
-			'roles' : 'roles',
-			'interviews' : 'interviews',
-			'agents' : 'agents'
+			':route' : 'list'
 		},
 
-		roles: function(){
-			console.log("roles");
-			RoleController.init();
-		},
-		
-		interviews: function(){
-			console.log("interviews");
-			InterviewController.init();
-		},
-		
-		agents: function(){
-			console.log("agents");
-			AgentController.init();
+		list: function(route){
+			ListController.init({route:route});
 		}
 	});
 

@@ -1,31 +1,31 @@
 define([
 	"jquery",
 	"backbone",
-	"collections/agent",
-	"models/agent",
-	"views/agent/agent_list",
-	"views/agent/agent_form_new",
-	"views/agent/agent_button_new",
-], function($, Backbone, AgentCollection, AgentModel, AgentList, AgentFormNew, ButtonNew){
+	"collections/list",
+	"views/list",
+	"views/button_new"
+], function($, Backbone, ListCollection, ListView, ButtonNew){
 	
 	var viewContainer = $(".view");
 	var agentFormNew;
 	var self = this;
 
-	_.extend(AgentFormNew, Backbone.Events);
-	_.extend(ButtonNew, Backbone.Events);
+	// _.extend(AgentFormNew, Backbone.Events);
+	// _.extend(ButtonNew, 	Backbone.Events);
 	
-	var agentCollection;
+	var listCollection;
 
 	// init
-	this.init = function(){
+	this.init = function(opts){
 		
-		agentCollection = new AgentCollection();
-		var agentListView = new AgentList({collection:agentCollection});
+		listCollection = new ListCollection();
+		listCollection.url = '/api/'+opts.route;
+		var listView = new ListView({collection:listCollection,route:opts.route});
 
 		viewContainer.empty();
+
 		// Apeend view element directly instead of callinhg render because the view will wait for content form the server before rendering
-		viewContainer.append(view.$el);
+		viewContainer.append(listView.$el);
 		
 		var btn = new ButtonNew();
 		btn.on('openForm', this.openForm, this);
@@ -39,19 +39,21 @@ define([
 		viewContainer.append(agentFormNew.render());
 		// Listen for 'save' event
 		agentFormNew.on('submit', function(data){
-			self.create(data);
+			self.save(data);
 		});
 	}
 	
 	// Save new agent
-	this.create = function(data){
+	this.save = function(data){
 		var agent = new AgentModel(data);
+		console.log(agent);
 
 		// Remember to provide null as first arg else success and error callbacks won't fire!
 		agent.save(null, {
 			success: function(model, response){
 				agentFormNew.close();
 				agentCollection.add(agent);
+				console.log(agent);
 			},
 			error: function(model, xhr){
 				console.log(xhr);
