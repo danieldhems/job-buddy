@@ -7,16 +7,23 @@ define([
 
 	var view = Backbone.View.extend({
 		tagName: 'ul',
+		initialize: function(){
+
+			_.extend(this, Backbone.Events);
+
+			this.listenTo( this.collection, 'add', this.append );
+			
+			this.collection.fetch();
+		},
+		append: function(model){
+
+			var itemView = new ItemView({model:model});
+			this.$el.append( itemView.render() );
+		
+			this.render();
+		},
 		render: function(){
-			var self = this;
-			this.records = new Collection();
-			this.records.fetch().then( function(records){
-				records.forEach(function(record){
-					var itemView = new ItemView({model:record});
-					self.$el.append( itemView.render() );
-				});
-			});
-			return self.$el;
+			return this;
 		}
 	});
 

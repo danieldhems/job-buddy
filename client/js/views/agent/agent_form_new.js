@@ -6,10 +6,14 @@ define([
 	var view = Backbone.View.extend({
 		tagName: 'form',
 		events: {
-			"click .save" : "save"
+			"click .submit" : "submit"
 		},
-		save: function(){
-			this.trigger('save', form2js(this.$el));
+		submit: function(e){
+			e.preventDefault();
+			this.trigger('submit', form2js(this.el));
+		},
+		close: function(){
+			this.remove();
 		},
 		attributes: {
 			method: '',
@@ -28,7 +32,7 @@ define([
 			<input name=\"phone_number\" class=\"text-field agent-phone_number\" placeholder=\"Phone number\" /><br>\
 			<input name=\"mobile_number\" class=\"text-field agent-mobile_number\" placeholder=\"Mobile number\" />\
 			<input name=\"email\" class=\"text-field agent-email\" placeholder=\"Email\" /><br>\
-			<submit class=\"save\" name=\"submit\" value=\"save\">\
+			<input type=\"submit\" class=\"submit\" name=\"submit\" value=\"save\" />\
 		",
 		initialize: function(){
 			_.extend(this, Backbone.Events);
