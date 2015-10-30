@@ -8,8 +8,12 @@ define([
 		initialize: function(opts){
 			this.collectionName = opts.collectionName;
 		},
+		getTplName: function(str){
+			return str.slice(0,-1);
+		},
 		render: function(){
-			this.$el.html( Template('item_' + this.collectionName, this.model.attributes) );
+			var tplName = this.getTplName(this.collectionName);
+			this.$el.html( Template('item_' + tplName, this.model.attributes) );
 			return this.$el;
 		}
 	});

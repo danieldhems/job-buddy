@@ -6,25 +6,31 @@ define([
 	"views/button_new"
 ], function($, Backbone, ListCollection, ListView, ButtonNew){
 	
-	var viewContainer = $(".view");
-	var agentFormNew;
-	var self = this;
+	this.viewContainer = $(".view");
+	this.agentFormNew;
 
-	// _.extend(AgentFormNew, Backbone.Events);
-	// _.extend(ButtonNew, 	Backbone.Events);
-	
-	var listCollection;
+	// Global var for listCollection instance
+	// (It gets instantiated insid ethe 'init' method)
+	this.listCollection;
 
 	// init
 	this.init = function(opts){
 		
-		listCollection = new ListCollection();
-		listCollection.url = '/api/'+opts.route;
-		var listView = new ListView({collection:listCollection,route:opts.route});
+		this.listCollection = new ListCollection();
+
+		// We're using the same collection for all lists so
+		// dynamically set the URL when the route changes
+		this.listCollection.url = '/api/'+opts.route;
+		var listView = new ListView({
+			collection:listCollection,
+			// pass additional 'route' option which informs 'item' subview
+			// so it can load the correct HTML template
+			route:opts.route
+		});
 
 		viewContainer.empty();
 
-		// Apeend view element directly instead of callinhg render because the view will wait for content form the server before rendering
+		// Append view element directly instead of calling render because the view will wait for content from the server before rendering
 		viewContainer.append(listView.$el);
 		
 		var btn = new ButtonNew();
@@ -39,8 +45,8 @@ define([
 		viewContainer.append(agentFormNew.render());
 		// Listen for 'save' event
 		agentFormNew.on('submit', function(data){
-			self.save(data);
-		});
+			this.save(data);
+		}, this);
 	}
 	
 	// Save new agent
