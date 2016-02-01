@@ -3,6 +3,12 @@ module.exports = function(grunt){
 		config: {
 			client_dir: 'client/'
 		},
+		webpack: {
+			dev: {
+				entry: 'client/js/main.js',
+				output: 'dist/js/application.js'
+			}
+		},
 		watch: {
 			options: {
 				livereload: true

@@ -1,0 +1,33 @@
+agent
+	summary view
+		name
+		company name
+		roles active
+		roles in pipeline
+		phone number
+		email address
+	detail view
+		(needs one?)
+
+role
+	summary view
+		company name
+		agent
+		salary
+		location
+		isInterviewing
+		hasOffered
+		spec (link to view)
+	detail view
+		all of the above plus ->
+		company address
+		company website
+		spec (full view)
+		package / bens
+		
+
+interview
+	stage
+	notes
+	contact name/s
+	date/time

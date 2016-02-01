@@ -13,7 +13,8 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "client/bower_components"
   ],
   "dependencies": {
     "backbone": "~1.2.1",
@@ -23,7 +24,10 @@
     "moment": "~2.9.0",
     "json3": "~3.3.1",
     "backbone-router": "~0.3.0",
-    "jquery": "~2.1.4",
-    "requirejs": "~2.1.20"
+    "jquery": "~2.2.0",
+    "requirejs": "~2.1.20",
+    "flux": "~2.1.1",
+    "react": "~0.14.5",
+    "alt": "~0.18.1"
   }
 }
