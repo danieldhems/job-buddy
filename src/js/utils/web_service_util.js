@@ -1,3 +1,5 @@
+import Promise from 'promise';
+
 /*****************************************
  * We service utility class
  *****************************************/
@@ -5,15 +7,15 @@
 // Vendor
 var $ = window.$;
 
-export default class WebServiceUtil {
+class WebServiceUtil {
 	constructor() {}
 
 	/**
 	 * makeWebServiceRequest
 	 * Makes a new web service request
 	 */
-	static makeWebServiceRequest(url, type, data, success, failure) {
-		DebugUtil.log("Making web service request:", url, type, data);
+	makeWebServiceRequest(url, type, data, success, failure) {
+		console.log("Making web service request:", url, type, data);
 		var self = this;
 		$.ajax({
 			url: url,
@@ -23,11 +25,11 @@ export default class WebServiceUtil {
 			crossDomain: true,
 			data: data
 		}).done(function(data) {
-			DebugUtil.log("Setting state from API:", data);
-			success(data);
+			console.log("Setting state from API:", data);
+			return success(data);
 		}).fail(function(error) {
-			DebugUtil.log("Get state error", error);
-			failure(error);
+			console.log("Get state error", error);
+			return failure(error);
 		});
   	}
 
@@ -51,3 +53,5 @@ export default class WebServiceUtil {
     return response;
 	}
 }
+
+export default new WebServiceUtil(); 

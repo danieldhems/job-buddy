@@ -2,7 +2,7 @@ var mysql = require('mysql');
 
 var dbConfig = {
 	host: 'localhost',
-	database: 'jobs',
+	database: 'job_buddy',
 	user: 'dhems',
 	password: 'Cat09021988'
 };

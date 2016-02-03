@@ -1,12 +1,13 @@
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-	context: __dirname + '\\client\\js',
+	context: __dirname + '\\src\\js',
 	output: {
 		path: __dirname + '\\dist',
 		filename: 'bundle.js'
 	},
-	entry: '.\\app',
+	entry: '.\\application.js',
 	module: {
 		loaders: [
 		    {
@@ -17,7 +18,12 @@ module.exports = {
 		          presets: ['es2015', 'react']
 		        }
 		    }
-	  	]
+	  	],
+		plugins: [
+			new CopyWebpackPlugin([
+				{from: '.\\src\\index.html', to: '.\\dist\\index.html'}
+			])
+		],
 	},
 	resolve: {
 	    extensions: ['', '.js', '.jsx']
