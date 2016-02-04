@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
-import ApplicationDispatcher from '../dispatcher';
-import AgentActions from '../actions/agent_actions';
-import AgentStore from '../stores/agent_store';
+import ApplicationDispatcher from '../../dispatcher';
+import AgentActions from '../../actions/agent_actions';
+import AgentStore from '../../stores/agent_store';
+import List from '../common/list';
+import ListItem from '../common/list_item';
+import AgentSummary from './agent_summary';
 
-let _state = {};
-
-export default class Agent extends Component {
+export default class AgentList extends Component {
 	constructor(){
 		super();
+		this.state = {};
+		this.buildInitialState()
+	}
+
+	buildInitialState(){
+		this.state.agents = [];
 	}
 
 	bindListeners(){
@@ -22,9 +29,10 @@ export default class Agent extends Component {
 		this.bindListeners();
 		this._requestContent();
 	}
+	
 	_buildStateFromStores(){
-		_state.agents = AgentStore.getAllAgents();
-		console.log('Agents in state:', _state.agents)
+		this.setState({agents: AgentStore.getAllAgents()});
+		console.log('Agents in state:', this.state.agents)
 	}
 
 	componentWillUnmount(){
@@ -33,7 +41,6 @@ export default class Agent extends Component {
 
 	_onAgentStoreChange(){
 		console.log('Agent component receive Agent Store change');
-		console.log(this)
 		this._buildStateFromStores();
 	}
 
@@ -41,14 +48,21 @@ export default class Agent extends Component {
 		AgentActions.requestAllAgents();
 	}
 
-
 	removeListeners(){
 		this.onAgentStoreChange = AgentStore.on('change', this);
 	}
 
 	render(){
 		return (
-			<div></div>
+			<List>
+				{this.state.agents.map( item => {
+					return (
+						<ListItem key={item[0].id}>
+							<AgentSummary {...item[0]} />
+						</ListItem>
+					)
+				})}
+			</List>
 		)
 	}
 }

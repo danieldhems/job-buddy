@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 export default class List extends Component {
 	constructor(options){
@@ -7,9 +7,7 @@ export default class List extends Component {
 	render(){
 		return (
 			<ul>
-				{this.props.collection.map(item=>{
-					return <Item {...item} />
-				})}
+				{this.props.children}
 			</ul>
 		)
 	}

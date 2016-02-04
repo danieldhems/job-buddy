@@ -3,9 +3,9 @@ import ApplicationDispatcher from '../dispatcher';
 import WebServiceTypes from '../constants/web_service_types';
 import WebServiceStore from './web_service_store';
 
-let _agents = [];
+let _roles = [];
 
-class AgentStore extends EventEmitter {
+class RoleStore extends EventEmitter {
 
 	constructor(options){
 		super(options);
@@ -16,7 +16,7 @@ class AgentStore extends EventEmitter {
 		this.dispatchToken = ApplicationDispatcher.register( action => {
 			switch(action.type){
 				case WebServiceTypes.ON_REQUEST_SUCCESS:
-					console.log('Agent store receive action: ', WebServiceTypes.ON_REQUEST_SUCCESS);
+					console.log('Role store receive action: ', WebServiceTypes.ON_REQUEST_SUCCESS);
 					this.updateState(action.payload);
 					this.emit('change');
 					break;
@@ -26,11 +26,11 @@ class AgentStore extends EventEmitter {
 	}
 
 	updateState(...items){
-		_agents.push(...items);
+		_roles.push(...items);
 	}
 
 	remoteItems(...itemIds){
-		itemIds.forEach( id => delete _agents[id] );
+		itemIds.forEach( id => delete _roles[id] );
 		this.emitChange();
 	}
 
@@ -44,13 +44,13 @@ class AgentStore extends EventEmitter {
 		}
 	}
 
-	getAllAgents(){
-		return _agents;
+	getAllRoles(){
+		return _roles;
 	}
 
-	getOneAgent(id){
-		return _agents[id];
+	getOneRole(id){
+		return _roles[id];
 	}
 }
 
-export default new AgentStore();
+export default new RoleStore();
