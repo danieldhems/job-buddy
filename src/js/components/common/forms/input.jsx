@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import ClassNameUtil from '../utils/class-name';
+import ClassNameUtil from '../../../utils/class-name';
 export default class Input extends Component {
 
   constructor(options) {
@@ -27,7 +27,12 @@ export default class Input extends Component {
   render() {
     const classNamesContent = ClassNameUtil.getComponentClassNames(this);
     return (
-      <input className={classNamesContent} id={this.props.id || this.props.name} name={this.props.name} value={this.state.value}
+      <input
+        className={classNamesContent}
+        id={this.props.id || this.props.name}
+        name={this.props.name}
+        type={this.props.type}
+        value={this.state.value}
         maxLength={this.props.maxlength}
         title={this.props.title} onChange={this.handleInputChange} />
     );
@@ -37,6 +42,7 @@ export default class Input extends Component {
 };
 Input.propTypes = {
   id: PropTypes.string,
+  type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   defaultValue: PropTypes.string,
   title: PropTypes.string,

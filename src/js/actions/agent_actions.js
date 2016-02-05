@@ -13,5 +13,12 @@ export default {
 			type: WebServiceTypes.GET_REQUEST,
 			payload: defaultPayload
 		});
+	},
+	createAgent(userData){
+		console.log('Agents dispatching action: ', WebServiceTypes.POST_REQUEST)
+		ApplicationDispatcher.dispatch({
+			type: WebServiceTypes.POST_REQUEST,
+			payload: Object.assign(defaultPayload, {body: userData})
+		});
 	}
 }

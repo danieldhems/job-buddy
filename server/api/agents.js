@@ -4,9 +4,11 @@ var router = require('express').Router();
 var api = {
 	create: function(req, res){
 		var data = req.body;
+		console.log(data);
 		db.query('INSERT INTO `agents` SET ?', [data], function(err, result){
+			console.log(err, result)
 			if(err) res.send(new Error(err));
-			if(result.affectedRows==1) res.json({id:result.insertId});
+			if(result.affectedRows==1) res.json(Object.assign(data, result.insertId));
 		});
 	},
 	read: function(req, res){

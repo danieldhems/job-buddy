@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Label from './label.jsx'
-import ClassNameUtil from '../utils/class-name';
+import ClassNameUtil from '../../../utils/class-name';
 
 export default class RadioOption extends Component{
 

@@ -53,6 +53,23 @@ class WebServiceStore extends EventEmitter {
 						}
 					);
 					break;
+				case WebServiceTypes.POST_REQUEST:
+				console.log('Web Service store receive action: ', WebServiceTypes.POST_REQUEST, action.payload.body)
+					this._makeWebServiceRequest(
+						action.payload.endPoint,
+						'POST',
+						action.payload.body,
+						function(responseData){
+							ApplicationDispatcher.dispatch({
+								type: WebServiceTypes.ON_REQUEST_SUCCESS,
+								payload: responseData
+							});
+						},
+						(error) => {
+							console.log(error);		
+						}
+					);
+					break;
 				default:
 			}
 		})

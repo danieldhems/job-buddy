@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import RadioOption from './radio-option.jsx'
-import ClassNameUtil from '../utils/class-name';
+import ClassNameUtil from '../../../utils/class-name';
 
 export default class RadioGroup extends Component{
 

@@ -3,7 +3,7 @@ import ApplicationDispatcher from '../dispatcher';
 import WebServiceTypes from '../constants/web_service_types';
 import WebServiceStore from './web_service_store';
 
-let _agents = [];
+let _agents;
 
 class AgentStore extends EventEmitter {
 
@@ -25,8 +25,8 @@ class AgentStore extends EventEmitter {
 		})
 	}
 
-	updateState(...items){
-		_agents.push(...items);
+	updateState(items){
+		_agents = items;
 	}
 
 	remoteItems(...itemIds){

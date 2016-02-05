@@ -2,7 +2,7 @@
  * Paragraph component
  *****************************************/
 import React, { Component, PropTypes } from 'react';
-import ClassNameUtil from '../utils/class-name';
+import ClassNameUtil from '../../utils/class-name';
 export default class Paragraph extends Component {
 
   render() {

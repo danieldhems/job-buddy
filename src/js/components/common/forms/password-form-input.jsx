@@ -1,7 +1,7 @@
 /*****************************************
  * Password form input component
  *****************************************/
-import ClassNameUtil from '../utils/class-name';
+import ClassNameUtil from '../../../utils/class-name';
 import ContextUtil from '../utils/context';
 import DebugUtil from '../utils/debug';
 import ApplicationDispatcher from '../dispatcher/application-dispatcher';

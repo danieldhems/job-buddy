@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import ClassNameUtil from '../utils/class-name';
+import ClassNameUtil from '../../../utils/class-name';
 export default class Textarea extends Component {
 
   constructor(options) {

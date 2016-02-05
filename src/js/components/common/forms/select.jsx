@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import SelectOption from './select-option.jsx'
-import ClassNameUtil from '../utils/class-name';
+import ClassNameUtil from '../../../utils/class-name';
 
 export default class Select extends Component{
 

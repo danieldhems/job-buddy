@@ -14,7 +14,7 @@ export default class AgentList extends Component {
 	}
 
 	buildInitialState(){
-		this.state.agents = [];
+		this.state.agents = null;
 	}
 
 	bindListeners(){
@@ -53,16 +53,20 @@ export default class AgentList extends Component {
 	}
 
 	render(){
-		return (
-			<List>
-				{this.state.agents.map( item => {
-					return (
-						<ListItem key={item[0].id}>
-							<AgentSummary {...item[0]} />
-						</ListItem>
-					)
-				})}
-			</List>
-		)
+		if(this.state.agents){
+			return (
+				<List>
+					{this.state.agents.map( (item, index) => {
+						return (
+							<ListItem key={index}>
+								<AgentSummary {...item} />
+							</ListItem>
+						)
+					})}
+				</List>
+			)
+		} else {
+			return null;
+		}
 	}
 }

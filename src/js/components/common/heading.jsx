@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import DebugUtil from '../utils/debug';
-import ClassNameUtil from '../utils/class-name';
+import DebugUtil from '../../utils/debug';
+import ClassNameUtil from '../../utils/class-name';
 export default class Heading extends Component{
 
   getTag(level, classNames){
