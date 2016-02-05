@@ -8,7 +8,7 @@ var api = {
 		db.query('INSERT INTO `agents` SET ?', [data], function(err, result){
 			console.log(err, result)
 			if(err) res.send(new Error(err));
-			if(result.affectedRows==1) res.json(Object.assign(data, result.insertId));
+			if(result.affectedRows==1) res.json({id:result.insertId});
 		});
 	},
 	read: function(req, res){

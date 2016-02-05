@@ -20262,7 +20262,10 @@
 		POST_REQUEST: 'WebServiceTypes.POST_REQUEST',
 		PUT_REQUEST: 'WebServiceTypes.PUT_REQUEST',
 		DELETE_REQUEST: 'WebServiceTypes.DELETE_REQUEST',
-		ON_REQUEST_SUCCESS: 'WebServiceTypes.ON_REQUEST_SUCCESS',
+		ON_GET_REQUEST_SUCCESS: 'WebServiceTypes.ON_GET_REQUEST_SUCCESS',
+		ON_POST_REQUEST_SUCCESS: 'WebServiceTypes.ON_POST_REQUEST_SUCCESS',
+		ON_PUT_REQUEST_SUCCESS: 'WebServiceTypes.ON_PUT_REQUEST_SUCCESS',
+		ON_DELETE_REQUEST_SUCCESS: 'WebServiceTypes.ON_DELETE_REQUEST_SUCCESS',
 		ON_REQUEST_FAILURE: 'WebServiceTypes.ON_REQUEST_FAILURE'
 	};
 
@@ -20337,9 +20340,14 @@
 
 				this.dispatchToken = _dispatcher2.default.register(function (action) {
 					switch (action.type) {
-						case _web_service_types2.default.ON_REQUEST_SUCCESS:
-							console.log('Agent store receive action: ', _web_service_types2.default.ON_REQUEST_SUCCESS);
+						case _web_service_types2.default.ON_GET_REQUEST_SUCCESS:
+							console.log('Agent store receive action: ', _web_service_types2.default.ON_GET_REQUEST_SUCCESS);
 							_this2.updateState(action.payload);
+							_this2.emit('change');
+							break;
+						case _web_service_types2.default.ON_POST_REQUEST_SUCCESS:
+							console.log('Agent store receive action: ', _web_service_types2.default.ON_POST_REQUEST_SUCCESS);
+							_this2.handlePostRequestSuccess(action.payload);
 							_this2.emit('change');
 							break;
 						default:
@@ -20350,6 +20358,11 @@
 			key: 'updateState',
 			value: function updateState(items) {
 				_agents = items;
+			}
+		}, {
+			key: 'handlePostRequestSuccess',
+			value: function handlePostRequestSuccess(payload) {
+				_agents.push(payload);
 			}
 		}, {
 			key: 'remoteItems',
@@ -20789,7 +20802,7 @@
 						case _web_service_types2.default.GET_REQUEST:
 							_this2._makeWebServiceRequest(action.payload.endPoint, 'GET', action.payload.body, function (responseData) {
 								_dispatcher2.default.dispatch({
-									type: _web_service_types2.default.ON_REQUEST_SUCCESS,
+									type: _web_service_types2.default.ON_GET_REQUEST_SUCCESS,
 									payload: responseData
 								});
 							}, function (error) {
@@ -20800,8 +20813,8 @@
 							console.log('Web Service store receive action: ', _web_service_types2.default.POST_REQUEST, action.payload.body);
 							_this2._makeWebServiceRequest(action.payload.endPoint, 'POST', action.payload.body, function (responseData) {
 								_dispatcher2.default.dispatch({
-									type: _web_service_types2.default.ON_REQUEST_SUCCESS,
-									payload: responseData
+									type: _web_service_types2.default.ON_POST_REQUEST_SUCCESS,
+									payload: Object.assign(action.payload.body, responseData)
 								});
 							}, function (error) {
 								console.log(error);

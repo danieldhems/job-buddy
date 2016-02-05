@@ -15,9 +15,14 @@ class AgentStore extends EventEmitter {
 	registerActionInterests(){
 		this.dispatchToken = ApplicationDispatcher.register( action => {
 			switch(action.type){
-				case WebServiceTypes.ON_REQUEST_SUCCESS:
-					console.log('Agent store receive action: ', WebServiceTypes.ON_REQUEST_SUCCESS);
+				case WebServiceTypes.ON_GET_REQUEST_SUCCESS:
+					console.log('Agent store receive action: ', WebServiceTypes.ON_GET_REQUEST_SUCCESS);
 					this.updateState(action.payload);
+					this.emit('change');
+					break;
+				case WebServiceTypes.ON_POST_REQUEST_SUCCESS:
+					console.log('Agent store receive action: ', WebServiceTypes.ON_POST_REQUEST_SUCCESS);
+					this.handlePostRequestSuccess(action.payload);
 					this.emit('change');
 					break;
 				default:
@@ -27,6 +32,10 @@ class AgentStore extends EventEmitter {
 
 	updateState(items){
 		_agents = items;
+	}
+
+	handlePostRequestSuccess(payload){
+		_agents.push(payload);
 	}
 
 	remoteItems(...itemIds){

@@ -44,7 +44,7 @@ class WebServiceStore extends EventEmitter {
 						action.payload.body,
 						function(responseData){
 							ApplicationDispatcher.dispatch({
-								type: WebServiceTypes.ON_REQUEST_SUCCESS,
+								type: WebServiceTypes.ON_GET_REQUEST_SUCCESS,
 								payload: responseData
 							});
 						},
@@ -61,8 +61,8 @@ class WebServiceStore extends EventEmitter {
 						action.payload.body,
 						function(responseData){
 							ApplicationDispatcher.dispatch({
-								type: WebServiceTypes.ON_REQUEST_SUCCESS,
-								payload: responseData
+								type: WebServiceTypes.ON_POST_REQUEST_SUCCESS,
+								payload: Object.assign( action.payload.body, responseData )
 							});
 						},
 						(error) => {
