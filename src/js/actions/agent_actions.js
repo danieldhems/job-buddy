@@ -20,5 +20,19 @@ export default {
 			type: WebServiceTypes.POST_REQUEST,
 			payload: Object.assign(defaultPayload, {body: userData})
 		});
-	}
+	},
+	deleteAgent(agentId){
+		console.log('Agents dispatching action: ', WebServiceTypes.DELETE_REQUEST)
+		ApplicationDispatcher.dispatch({
+			type: WebServiceTypes.DELETE_REQUEST,
+			payload: Object.assign(defaultPayload, {id: parseInt(agentId,10)})
+		});
+	},
+	updateAgent(userData){
+		console.log('Agents dispatching action: ', WebServiceTypes.PUT_REQUEST)
+		ApplicationDispatcher.dispatch({
+			type: WebServiceTypes.PUT_REQUEST,
+			payload: Object.assign(defaultPayload, {body: userData})
+		});
+	},
 }

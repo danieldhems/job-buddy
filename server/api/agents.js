@@ -27,17 +27,18 @@ var api = {
 	},
 	update: function(req, res){
 		var data = req.body;
-		var id = req.params.id;
-		db.query('UPDATE `agents` SET ? WHERE `id` = ?', [data, id], function(err, result){
+		console.log(data)
+		db.query('UPDATE `agents` SET ? WHERE `id` = ?', [data, data.id], function(err, result){
 			if(err) throw new Error(err);
-			console.log(result);
+			console.log(result)
+			res.json(result);
 		});
 	},
 	destroy: function(req, res){
-		var id = req.params.id;
-		db.query('DROP * FROM `agents` WHERE `id` = ?', [id], function(err, rows){
+		var id = parseInt(req.body.id);
+		db.query('DELETE FROM `agents` WHERE `id` = ?', [id], function(err, rows){
 			if(err) throw new Error(err);
-			console.log(rows);
+			res.json({"success":true});
 		});
 	}
 };
@@ -45,10 +46,10 @@ var api = {
 
 // Set API CRUD endpoints
 router.get('/', api.read);
-router.get('/:id', api.read);
+router.get('/', api.read);
 router.post('/', api.create);
-router.put('/:id', api.update);
-router.patch('/:id', api.update);
-router.delete('/:id', api.destroy);
+router.put('/', api.update);
+router.patch('/', api.update);
+router.delete('/', api.destroy);
 
 module.exports = router;

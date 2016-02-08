@@ -54,7 +54,7 @@ class WebServiceStore extends EventEmitter {
 					);
 					break;
 				case WebServiceTypes.POST_REQUEST:
-				console.log('Web Service store receive action: ', WebServiceTypes.POST_REQUEST, action.payload.body)
+					console.log('Web Service store receive action: ', WebServiceTypes.POST_REQUEST, action.payload.body)
 					this._makeWebServiceRequest(
 						action.payload.endPoint,
 						'POST',
@@ -63,6 +63,40 @@ class WebServiceStore extends EventEmitter {
 							ApplicationDispatcher.dispatch({
 								type: WebServiceTypes.ON_POST_REQUEST_SUCCESS,
 								payload: Object.assign( action.payload.body, responseData )
+							});
+						},
+						(error) => {
+							console.log(error);		
+						}
+					);
+					break;
+				case WebServiceTypes.DELETE_REQUEST:
+					console.log('Web Service store receive action: ', WebServiceTypes.DELETE_REQUEST, action.payload.body)
+					this._makeWebServiceRequest(
+						action.payload.endPoint,
+						'DELETE',
+						action.payload,
+						function(responseData){
+							ApplicationDispatcher.dispatch({
+								type: WebServiceTypes.ON_DELETE_REQUEST_SUCCESS,
+								payload: {id: action.payload.id}
+							});
+						},
+						(error) => {
+							console.log(error);		
+						}
+					);
+					break;
+				case WebServiceTypes.PUT_REQUEST:
+					console.log('Web Service store receive action: ', WebServiceTypes.PUT_REQUEST, action.payload.body)
+					this._makeWebServiceRequest(
+						action.payload.endPoint,
+						'PUT',
+						action.payload.body,
+						function(responseData){
+							ApplicationDispatcher.dispatch({
+								type: WebServiceTypes.ON_PUT_REQUEST_SUCCESS,
+								payload: action.payload.body
 							});
 						},
 						(error) => {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AgentList from './components/agent/agent_list';
-import NewAgentForm from './components/new_agent_form';
+import AgentForm from './components/agent_form';
 
 export default class Application extends Component {
 	constructor(){
@@ -11,7 +11,7 @@ export default class Application extends Component {
 		return (
 			<div className="JobBuddyApplication">
 				<AgentList />
-				<NewAgentForm />
+				<AgentForm userAction="create" />
 			</div>
 		)
 	}
