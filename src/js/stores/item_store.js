@@ -4,13 +4,41 @@ import WebServiceTypes from '../constants/web_service_types';
 import WebServiceStore from './web_service_store';
 import ItemTypes from '../constants/item_types';
 
-let _item;
-
 class ItemStore extends EventEmitter {
 
 	constructor(options){
 		super(options);
 		this.registerActionInterests();
+	}
+
+	updateEditedItem(data){
+		this.state = {
+			isEditing: false,
+			currentItem: Object.assign(this.state.currentItem, data)
+		};
+		console.log('update result: ', this.state.currentItem);
+	}
+
+	startEditing(itemData){
+		this.state = {
+			isEditing: true,
+			currentItem: itemData
+		};
+	}
+
+	finishEditing(){
+		this.state = {
+			isEditing: false,
+			currentItem: null
+		};
+	}
+
+	getEditingState(){
+		return this.state;
+	}
+
+	getItem(){
+		return this.state.currentItem;
 	}
 
 	registerActionInterests(){
@@ -23,52 +51,17 @@ class ItemStore extends EventEmitter {
 					break;
 				case ItemTypes.CANCEL_EDITING:
 					console.log('Item store receive action: ', ItemTypes.CANCEL_EDITING);
-					this.cancelEditing();
+					this.finishEditing();
+					this.emit('change');
+					break;
+				case WebServiceTypes.ON_PUT_REQUEST_SUCCESS:
+					console.log('Item store receive action: ', WebServiceTypes.ON_PUT_REQUEST_SUCCESS, 'with payload: ', action.payload.body);
+					this.updateEditedItem(action.payload);
 					this.emit('change');
 					break;
 				default:
 			}
 		})
-	}
-
-	updateState(data){
-		_item = Object.assign(_item, data);
-	}
-
-	startEditing(itemData){
-		this.state = {
-			isEditing: true,
-			currentItem: itemData
-		};
-	}
-
-	cancelEditing(){
-		this.state = {
-			isEditing: false,
-			currentItem: null
-		};
-	}
-
-	getEditingState(){
-		return {
-			isEditing: this.state.isEditing,
-			currentItem: this.state.currentItem
-		};
-	}
-
-	// This belongs in Item store (list store shouldn't care about operations on individual items)
-	handlePutRequestSuccess(payload){
-		console.log(payload)
-		_items.map( (item, index, arr) => {
-			if(item.id === payload.id){
-				console.log('updating agent with props: ', payload);
-				_items[index] = Object.assign(item, payload);
-			} 
-		})
-	}
-
-	getItem(){
-		return _item;
 	}
 }
 

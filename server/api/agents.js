@@ -30,8 +30,8 @@ var api = {
 		console.log(data)
 		db.query('UPDATE `agents` SET ? WHERE `id` = ?', [data, data.id], function(err, result){
 			if(err) throw new Error(err);
-			console.log(result)
-			res.json(result);
+			console.log(result);
+			res.json({"success": true, "updatedItem": data});
 		});
 	},
 	destroy: function(req, res){

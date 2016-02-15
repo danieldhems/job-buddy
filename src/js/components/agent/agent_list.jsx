@@ -60,7 +60,7 @@ export default class AgentList extends Component {
 					{this.state.items.map( (item, index) => {
 						return (
 							<ListItem key={index}>
-								<AgentSummary {...item} />
+								<AgentSummary initialItemData={item} />
 							</ListItem>
 						)
 					})}

@@ -44,7 +44,7 @@ Input.propTypes = {
   id: PropTypes.string,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  defaultValue: PropTypes.string,
+  defaultValue: PropTypes.any,
   title: PropTypes.string,
   defaultClassName: PropTypes.string,
   className: PropTypes.string,

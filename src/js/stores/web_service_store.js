@@ -1,11 +1,11 @@
 import { EventEmitter } from 'events';
+import $ from 'jquery';
 import Promise from 'promise';
 import ApplicationDispatcher from '../dispatcher';
 import WebServiceUtil from '../utils/web_service_util';
 import WebServiceTypes from '../constants/web_service_types';
 import AgentTypes from '../constants/agent_types';
 import EndPointConstants from '../constants/end_point_constants';
-const $ = window.$;
 
 let _agents = [];
 
@@ -94,6 +94,7 @@ class WebServiceStore extends EventEmitter {
 						'PUT',
 						action.payload.body,
 						function(responseData){
+							console.log('done');
 							ApplicationDispatcher.dispatch({
 								type: WebServiceTypes.ON_PUT_REQUEST_SUCCESS,
 								payload: action.payload.body

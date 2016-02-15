@@ -21,12 +21,12 @@ export default class AgentForm extends Component {
 		let userData = form2js(ReactDOM.findDOMNode(this));
 		switch(this.props.userAction){
 			case 'create':
-				CrudActions.create(EndPointCOnstants.AGENT_END_POINT, userData);
+				CrudActions.create(EndPointConstants.AGENT_END_POINT, userData);
 				break;
 			case 'update':
 			console.log(this.props.id)
 				userData = Object.assign(userData, {id: this.props.id});
-				CrudActions.update(EndPointCOnstants.AGENT_END_POINT, userData);
+				CrudActions.update(EndPointConstants.AGENT_END_POINT, userData);
 				break;
 			default:
 		}

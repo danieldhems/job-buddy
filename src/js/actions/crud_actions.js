@@ -9,25 +9,25 @@ export default {
 			payload: {endPoint}
 		});
 	},
-	create(url, formData){
+	create(endPoint, formData){
 		console.log('Agents dispatching action: ', WebServiceTypes.POST_REQUEST)
 		ApplicationDispatcher.dispatch({
 			type: WebServiceTypes.POST_REQUEST,
-			payload: Object.assign(defaultPayload, {body: userData})
+			payload: {endPoint: endPoint, body: formData}
 		});
 	},
-	delete(url, id){
+	delete(endPoint, id){
 		console.log('Agents dispatching action: ', WebServiceTypes.DELETE_REQUEST)
 		ApplicationDispatcher.dispatch({
 			type: WebServiceTypes.DELETE_REQUEST,
-			payload: Object.assign(defaultPayload, {id: parseInt(agentId,10)})
+			payload: {endPoint: endPoint, id: parseInt(id,10)}
 		});
 	},
-	update(url, formData){
+	update(endPoint, formData){
 		console.log('Agents dispatching action: ', WebServiceTypes.PUT_REQUEST)
 		ApplicationDispatcher.dispatch({
 			type: WebServiceTypes.PUT_REQUEST,
-			payload: Object.assign(defaultPayload, {body: userData})
+			payload: {endPoint: endPoint, body: formData}
 		});
 	},
 }
