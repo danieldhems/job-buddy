@@ -2,8 +2,9 @@ import { EventEmitter } from 'events';
 import ApplicationDispatcher from '../dispatcher';
 import WebServiceTypes from '../constants/web_service_types';
 import WebServiceStore from './web_service_store';
+import ItemTypes from '../constants/item_types';
 
-let _items;
+let _item;
 
 class ItemStore extends EventEmitter {
 
@@ -15,19 +16,14 @@ class ItemStore extends EventEmitter {
 	registerActionInterests(){
 		this.dispatchToken = ApplicationDispatcher.register( action => {
 			switch(action.type){
-				case WebServiceTypes.ON_GET_REQUEST_SUCCESS:
-					console.log('Item store receive action: ', WebServiceTypes.ON_GET_REQUEST_SUCCESS);
-					this.updateState(action.payload);
+				case ItemTypes.START_EDITING:
+					console.log('Item store receive action: ', ItemTypes.START_EDITING);
+					this.startEditing(action.payload);
 					this.emit('change');
 					break;
-				case WebServiceTypes.ON_DELETE_REQUEST_SUCCESS:
-					console.log('Item store receive action: ', WebServiceTypes.ON_DELETE_REQUEST_SUCCESS);
-					this.handleDeleteRequestSuccess(action.payload);
-					this.emit('change');
-					break;
-				case WebServiceTypes.ON_PUT_REQUEST_SUCCESS:
-					console.log('Item store receive action: ', WebServiceTypes.ON_PUT_REQUEST_SUCCESS);
-					this.handlePutRequestSuccess(action.payload);
+				case ItemTypes.CANCEL_EDITING:
+					console.log('Item store receive action: ', ItemTypes.CANCEL_EDITING);
+					this.cancelEditing();
 					this.emit('change');
 					break;
 				default:
@@ -37,6 +33,27 @@ class ItemStore extends EventEmitter {
 
 	updateState(data){
 		_item = Object.assign(_item, data);
+	}
+
+	startEditing(itemData){
+		this.state = {
+			isEditing: true,
+			currentItem: itemData
+		};
+	}
+
+	cancelEditing(){
+		this.state = {
+			isEditing: false,
+			currentItem: null
+		};
+	}
+
+	getEditingState(){
+		return {
+			isEditing: this.state.isEditing,
+			currentItem: this.state.currentItem
+		};
 	}
 
 	// This belongs in Item store (list store shouldn't care about operations on individual items)

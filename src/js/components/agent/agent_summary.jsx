@@ -2,33 +2,54 @@ import React, { Component } from 'react';
 import Text from '../common/text';
 import Label from '../common/label';
 import Button from '../common/button';
-import AgentActions from '../../actions/agent_actions';
+import CrudActions from '../../actions/crud_actions';
+import ItemActions from '../../actions/item_actions';
 import AgentForm from '../agent_form';
+import ItemStore from '../../stores/item_store'; 
+import EndPointConstants from '../../constants/end_point_constants';
 
 export default class AgentSummary extends Component {
 	constructor(options){
 		super(options);
 		this.state = {}
-	}
-
-	componentDidMount(){
 		this.buildInitialState();
 	}
 
+	componentDidMount(){
+		this.bindListeners();
+	}
+
 	buildInitialState(){
-		this.setState({isEditing:false});
+		this.state = {isEditing:false};
+	}
+
+	getStateFromStore(){
+		console.log('Updatring agent summary state from store');
+		const ItemStoreCurrentState = ItemStore.getEditingState();
+		this.setState({
+			isEditing: ItemStoreCurrentState.isEditing && ItemStoreCurrentState.currentItem.id === this.props.id
+		})
+	}
+
+	bindListeners(){
+		this._onItemStoreChange = ItemStore.addListener('change', this._onItemStoreChange.bind(this));
+	}
+
+	_onItemStoreChange(){
+		console.log('Item store changed');
+		this.getStateFromStore();
 	}
 
 	deleteAgent(){
-		AgentActions.deleteAgent(this.props.id);
+		CrudActions.delete(EndPointConstants.AGENT_END_POINT, this.props.id);
 	}
 
 	enterEditMode(){
-		this.setState({isEditing:true});
+		ItemActions.startEditing(this.props);
 	}
 
 	cancelEditMode(){
-		this.setState({isEditing:false});
+		ItemActions.cancelEditing();
 	}
 
 	render(){

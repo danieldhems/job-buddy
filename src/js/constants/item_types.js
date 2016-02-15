@@ -1,0 +1,4 @@
+export default {
+	START_EDITING: 'ItemTypes.START_EDITING',
+	CANCEL_EDITING: 'ItemTypes.CANCEL_EDITING',
+}

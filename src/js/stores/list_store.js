@@ -55,4 +55,4 @@ class ListStore extends EventEmitter {
 
 }
 
-export default new AgentStore();
+export default new ListStore();

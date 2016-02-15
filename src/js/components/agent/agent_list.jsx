@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import ApplicationDispatcher from '../../dispatcher';
-import AgentActions from '../../actions/agent_actions';
-import AgentStore from '../../stores/agent_store';
+import CrudActions from '../../actions/crud_actions';
+import ListStore from '../../stores/list_store';
 import List from '../common/list';
 import ListItem from '../common/list_item';
 import AgentSummary from './agent_summary';
+import EndPointConstants from '../../constants/end_point_constants';
 
 export default class AgentList extends Component {
 	constructor(){
 		super();
 		this.state = {};
-		this.buildInitialState()
+		this.buildInitialState();
 	}
 
 	buildInitialState(){
@@ -18,11 +19,11 @@ export default class AgentList extends Component {
 	}
 
 	bindListeners(){
-		this._onAgentStoreChange = AgentStore.addListener('change', this._onAgentStoreChange.bind(this));
+		this._onListStoreChange = ListStore.addListener('change', this._onListStoreChange.bind(this));
 	}
 
 	removeListeners(){
-		AgentStore.removeListener('change', this._onAgentStoreChange);
+		ListStore.removeListener('change', this._onListStoreChange);
 	}
 
 	componentDidMount(){
@@ -31,32 +32,32 @@ export default class AgentList extends Component {
 	}
 	
 	_buildStateFromStores(){
-		this.setState({agents: AgentStore.getAllAgents()});
-		console.log('Agents in state:', this.state.agents)
+		this.setState({items: ListStore.getItems()});
+		console.log('Items in state:', this.state.items)
 	}
 
 	componentWillUnmount(){
 		this.removeListeners();
 	}
 
-	_onAgentStoreChange(){
-		console.log('Agent component receive Agent Store change');
+	_onListStoreChange(){
+		console.log('AgentList component receive List Store change');
 		this._buildStateFromStores();
 	}
 
 	_requestContent(){
-		AgentActions.requestAllAgents();
+		CrudActions.fetch(EndPointConstants.AGENT_END_POINT);
 	}
 
 	removeListeners(){
-		this.onAgentStoreChange = AgentStore.on('change', this);
+		this.onListStoreChange = ListStore.on('change', this);
 	}
 
 	render(){
-		if(this.state.agents){
+		if(this.state.items){
 			return (
 				<List>
-					{this.state.agents.map( (item, index) => {
+					{this.state.items.map( (item, index) => {
 						return (
 							<ListItem key={index}>
 								<AgentSummary {...item} />
