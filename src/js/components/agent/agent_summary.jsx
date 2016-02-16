@@ -5,7 +5,7 @@ import Button from '../common/button';
 import CrudActions from '../../actions/crud_actions';
 import ItemActions from '../../actions/item_actions';
 import AgentForm from '../agent_form';
-import ItemStore from '../../stores/item_store';
+import ItemEditStore from '../../stores/item_edit_store';
 import EndPointConstants from '../../constants/end_point_constants';
 
 export default class AgentSummary extends Component {
@@ -24,18 +24,19 @@ export default class AgentSummary extends Component {
 	}
 
 	getStateFromStore(){
-		const ItemStoreCurrentState = ItemStore.getEditingState();
+		const ItemEditStoreCurrentState = ItemEditStore.getState();
+		console.log(ItemEditStoreCurrentState)
 		this.setState({
-			isEditing: ItemStoreCurrentState.isEditing && ItemStoreCurrentState.currentItem.id === this.state.itemData.id,
-			itemData: ItemStoreCurrentState.currentItem.id && ItemStoreCurrentState.currentItem.id === this.state.itemData.id ? ItemStore.getItem() : this.props.initialItemData
+			isEditing: ItemEditStoreCurrentState.isEditing && ItemEditStoreCurrentState.itemDataInEdit.id === this.state.itemData.id,
+			itemData: ItemEditStoreCurrentState.itemDataInEdit && ItemEditStoreCurrentState.itemDataInEdit.id === this.state.itemData.id ? ItemEditStoreCurrentState.itemDataInEdit : this.props.initialItemData
 		})
 	}
 
 	bindListeners(){
-		this._onItemStoreChange = ItemStore.addListener('change', this._onItemStoreChange.bind(this));
+		this._onItemEditStoreChange = ItemEditStore.addListener('change', this._onItemEditStoreChange.bind(this));
 	}
 
-	_onItemStoreChange(){
+	_onItemEditStoreChange(){
 		this.getStateFromStore();
 	}
 
