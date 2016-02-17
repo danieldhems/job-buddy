@@ -26,7 +26,6 @@ export default class RoleForm extends Component {
 				CrudActions.create(EndPointConstants.ROLE_END_POINT, userData);
 				break;
 			case 'update':
-			console.log(this.props.id)
 				userData = Object.assign(userData, {id: this.props.id});
 				CrudActions.update(EndPointConstants.ROLE_END_POINT, userData);
 				break;
@@ -43,12 +42,11 @@ export default class RoleForm extends Component {
 	render(){
 		const heading = this.getHeading();
 		const agents = AgentStore.getAgentDataForDropdown();
-		console.log('Agent data for dropdown: ', agents);
 		return (
 			<Form className="formNewRole" ref="form">
 				<Heading level={2}>{heading}</Heading>
 				<Text>Title</Text>
-				<Input type="text" name="name" defaultValue={this.props.title || ""} className="form formNew form_newRole__titleField" />
+				<Input type="text" name="title" defaultValue={this.props.title || ""} className="form formNew form_newRole__titleField" />
 				<Text>Client</Text>
 				<Input type="text" name="client" defaultValue={this.props.client || ""} className="form formNew form_newRole__clientField" />
 				<Text>Salary</Text>
@@ -56,8 +54,7 @@ export default class RoleForm extends Component {
 				<Text>Location</Text>
 				<Input type="text" name="location" defaultValue={this.props.location || ""} className="form formNew form_newRole__locationField" />
 				<Text>Agent</Text>
-				<Select name="agent" items={agents} valueIdentifier="id" textIdentifier="name" />
-				<Input type="text" name="agent" defaultValue={this.props.agent || ""} className="form formNew form_newRole__agentField" />
+				<Select name="agent_id" items={agents} valueIdentifier="id" textIdentifier="name" className="form formNew form_newRole__agentField" />
 				<SubmitButton name="submitButton" defaultValue="Add" onClick={this.handleSubmit.bind(this)} />
 				<Button onClick={this.props.onCancel}>Cancel</Button>
 			</Form>

@@ -6,12 +6,13 @@ var api = {
 		var data = req.body;
 		db.query('INSERT INTO `roles` SET ?', [data], function(err, result){
 			if(err) throw new Error(err);
-			if(result.affectedRows===1) res.send(200, result.insertId);
+			if(result.affectedRows===1) res.json({id: result.insertId});
 		});
 	},
 	read: function(req, res){
 		var query = "\
 			SELECT\
+				roles.id,\
 				roles.title,\
 				roles.client,\
 				roles.salary,\
@@ -43,20 +44,19 @@ var api = {
 		});
 	},
 	destroy: function(req, res){
-		var id = req.params.id;
-		db.query('DROP * FROM `roles` WHERE id = ?', [id], function(err, rows){
+		var id = parseInt(req.body.id,10);
+		db.query('DELETE FROM `roles` WHERE id = ?', [id], function(err, rows){
 			if(err) throw new Error(err);
-			console.log(rows);
+			res.json({"success":true});
 		});
 	}
 };
 
 // Set API CRUD endpoints
 router.get('/', api.read);
-router.get('/:id', api.read);
 router.post('/', api.create);
-router.put('/:id', api.update);
-router.patch('/:id', api.update);
-router.delete('/:id', api.destroy);
+router.put('/', api.update);
+router.patch('/', api.update);
+router.delete('/', api.destroy);
 
 module.exports = router;

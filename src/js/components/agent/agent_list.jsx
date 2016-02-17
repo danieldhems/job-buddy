@@ -12,6 +12,7 @@ export default class AgentList extends Component {
 	constructor(){
 		super();
 		this.state = {};
+		this.ListStore = new ListStore();
 		this.buildInitialState();
 	}
 
@@ -20,7 +21,7 @@ export default class AgentList extends Component {
 	}
 
 	bindListeners(){
-		this._onListStoreChange = ListStore.addListener('change', this._onListStoreChange.bind(this));
+		this._onListStoreChange = this.ListStore.addListener('change', this._onListStoreChange.bind(this));
 	}
 
 	removeListeners(){
@@ -37,7 +38,7 @@ export default class AgentList extends Component {
 	}
 	
 	buildStateFromStores(){
-		this.setState({items: ListStore.getItems()});
+		this.setState({items: this.ListStore.getItems()});
 		console.log('Items in state:', this.state.items)
 	}
 

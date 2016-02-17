@@ -3,12 +3,11 @@ import ApplicationDispatcher from '../dispatcher';
 import WebServiceTypes from '../constants/web_service_types';
 import WebServiceStore from './web_service_store';
 
-let _items;
-
 class ListStore extends EventEmitter {
 
 	constructor(){
 		super();
+		this._items = [];
 		this.registerActionInterests();
 	}
 
@@ -17,7 +16,7 @@ class ListStore extends EventEmitter {
 			switch(action.type){
 				case WebServiceTypes.ON_GET_REQUEST_SUCCESS:
 					console.log('List store receive action: ', WebServiceTypes.ON_GET_REQUEST_SUCCESS);
-					this.updateState(action.payload);
+					this.updateState(action.payload.responseData);
 					this.emit('change');
 					break;
 				case WebServiceTypes.ON_POST_REQUEST_SUCCESS:
@@ -36,21 +35,21 @@ class ListStore extends EventEmitter {
 	}
 
 	updateState(items){
-		_items = items;
+		this._items = items;
 	}
 
 	handlePostRequestSuccess(itemData){
-		_items.push(itemData);
+		this._items.push(itemData);
 	}
 
 	handleDeleteRequestSuccess(payload){
-		_items.map( (item, index, arr) => {
+		this._items.map( (item, index, arr) => {
 			if(item.id === payload.id) delete arr[index]
 		})
 	}
 
 	getItems(){
-		return _items;
+		return this._items;
 	}
 
 }

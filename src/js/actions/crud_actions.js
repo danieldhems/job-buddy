@@ -2,11 +2,11 @@ import ApplicationDispatcher from '../dispatcher';
 import WebServiceTypes from '../constants/web_service_types';
 
 export default {
-	fetch(endPoint){
+	fetch(endPoint, actionInterest){
 		console.log('Agents dispatching action: ', WebServiceTypes.GET_REQUEST)
 		ApplicationDispatcher.dispatch({
 			type: WebServiceTypes.GET_REQUEST,
-			payload: {endPoint}
+			payload: {endPoint, actionInterest}
 		});
 	},
 	create(endPoint, formData){

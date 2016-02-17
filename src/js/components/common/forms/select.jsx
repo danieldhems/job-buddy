@@ -27,12 +27,16 @@ export default class Select extends Component{
 
   render(){
     const classNamesContent = ClassNameUtil.getComponentClassNames(this);
-    const identifier = this.props.id || this.props.name;
-    console.log(this.props.items);
     return (
-      <select className={classNamesContent} id={identifier} defaultValue={this.state.value} name={this.props.name} disabled={this.props.disabled} onChange={this.handleInputChange} value>
+      <select
+        className={classNamesContent}
+        defaultValue={this.state.value}
+        name={this.props.name}
+        disabled={this.props.disabled}
+        onChange={this.handleInputChange}
+      >
         {this.props.items.map( item => {
-          return (<SelectOption key={item.id} value={item[this.props.valueIdentifier]}>{this.props.textIdentifier}</SelectOption>) 
+          return (<SelectOption key={item.id} value={item[this.props.valueIdentifier]}>{item[this.props.textIdentifier]}</SelectOption>) 
         })}
       </select>
     );

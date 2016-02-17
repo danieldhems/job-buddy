@@ -29,7 +29,7 @@ class WebServiceStore extends EventEmitter {
 			console.log("Web Store: Request successful:", data);
 			success(data);
 		}).fail(function(error) {
-			console.log("Web Store: Request failure:", error);
+			// console.log("Web Store: Request failure:", error);
 			failure(error);
 		});
 	}
@@ -45,7 +45,7 @@ class WebServiceStore extends EventEmitter {
 						function(responseData){
 							ApplicationDispatcher.dispatch({
 								type: WebServiceTypes.ON_GET_REQUEST_SUCCESS,
-								payload: responseData
+								payload: {responseData, actionInterest: action.payload.actionInterest}
 							});
 						},
 						(error) => {
@@ -94,7 +94,6 @@ class WebServiceStore extends EventEmitter {
 						'PUT',
 						action.payload.body,
 						function(responseData){
-							console.log('done');
 							ApplicationDispatcher.dispatch({
 								type: WebServiceTypes.ON_PUT_REQUEST_SUCCESS,
 								payload: action.payload.body

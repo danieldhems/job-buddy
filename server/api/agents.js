@@ -35,7 +35,7 @@ var api = {
 		});
 	},
 	destroy: function(req, res){
-		var id = parseInt(req.body.id);
+		var id = parseInt(req.body.id,10);
 		db.query('DELETE FROM `agents` WHERE `id` = ?', [id], function(err, rows){
 			if(err) throw new Error(err);
 			res.json({"success":true});

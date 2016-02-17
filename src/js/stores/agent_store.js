@@ -5,34 +5,34 @@ import WebServiceStore from './web_service_store';
 import ListStore from './list_store';
 import CrudActions from '../actions/crud_actions';
 import EndPointConstants from '../constants/end_point_constants';
-
-let _items;
+import ActionInterestConstants from '../constants/interest_types';
 
 class AgentStore extends ListStore {
 
 	constructor(){
 		super();
+		this._items = [];
 		this.ListStore = new ListStore();
-		CrudActions.fetch(EndPointConstants.AGENT_END_POINT);
+		CrudActions.fetch(EndPointConstants.AGENT_END_POINT, ActionInterestConstants.AGENT);
 	}
 
 	registerActionInterests(){
 		this.dispatchToken = ApplicationDispatcher.register( action => {
 			switch(action.type){
 				case WebServiceTypes.ON_GET_REQUEST_SUCCESS:
-					ApplicationDispatcher.waitFor([this.ListStore.dispatchToken]);
-					console.log('List store receive action: ', WebServiceTypes.ON_GET_REQUEST_SUCCESS);
-					this.updateState(action.payload);
-					this.emit('change');
+					console.log('Agent store receive action: ', WebServiceTypes.ON_GET_REQUEST_SUCCESS, 'with interest: ', action.payload.actionInterest);
+					if(action.payload.actionInterest === ActionInterestConstants.AGENT){
+						this.updateState(action.payload.responseData);
+						this.emit('change');
+					}
 					break;
 				case WebServiceTypes.ON_POST_REQUEST_SUCCESS:
-					ApplicationDispatcher.waitFor([this.ListStore.dispatchToken]);
-					console.log('List store receive action: ', WebServiceTypes.ON_POST_REQUEST_SUCCESS);
+					console.log('Agent store receive action: ', WebServiceTypes.ON_POST_REQUEST_SUCCESS);
 					this.handlePostRequestSuccess(action.payload);
 					this.emit('change');
 					break;
 				case WebServiceTypes.ON_DELETE_REQUEST_SUCCESS:
-					console.log('List store receive action: ', WebServiceTypes.ON_DELETE_REQUEST_SUCCESS);
+					console.log('Agent store receive action: ', WebServiceTypes.ON_DELETE_REQUEST_SUCCESS);
 					this.handleDeleteRequestSuccess(action.payload);
 					this.emit('change');
 					break;
@@ -41,16 +41,21 @@ class AgentStore extends ListStore {
 		})
 	}
 
+	updateState(payload){
+		console.log('Agent store updating state with: ', payload);
+		this._items = payload;
+	}
+
 	_filterByKeys(obj, keys){
 		let filteredObject = {};
 		Object.keys(obj).forEach( key => {
 			if( keys.find(i => i===key) ) filteredObject[key] = obj[key];
 		});
-		console.log('filtered object: ', filteredObject);
 		return filteredObject;
 	}
 
 	getAgentDataForDropdown(targetKeys = ['id','name']){
+		console.log('Getting agent data for dropdown')
 		// get all items, reduced to name and IDs only
 		return this.getItems().map( item => {
 			return this._filterByKeys(item, targetKeys)
