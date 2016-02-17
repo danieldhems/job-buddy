@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import SelectOption from './select-option.jsx'
+import SelectOption from './select-option';
 import ClassNameUtil from '../../../utils/class-name';
 
 export default class Select extends Component{
@@ -16,7 +16,6 @@ export default class Select extends Component{
 
   buildInitialState() {
     return {
-      value: this.props.selectedMonth
     }
   }
 
@@ -27,18 +26,16 @@ export default class Select extends Component{
   }
 
   render(){
-    if(React.Children.count(this.props.children) > 0){
-      const classNamesContent = ClassNameUtil.getComponentClassNames(this);
-      const identifier = this.props.id || this.props.name;
-      
-      return (
-        <select className={classNamesContent} id={identifier} defaultValue={this.state.value} name={this.props.name} disabled={this.props.disabled} onChange={this.handleInputChange}>
-          {this.props.children}
-        </select>
-      );
-    }
-
-    return null;
+    const classNamesContent = ClassNameUtil.getComponentClassNames(this);
+    const identifier = this.props.id || this.props.name;
+    console.log(this.props.items);
+    return (
+      <select className={classNamesContent} id={identifier} defaultValue={this.state.value} name={this.props.name} disabled={this.props.disabled} onChange={this.handleInputChange} value>
+        {this.props.items.map( item => {
+          return (<SelectOption key={item.id} value={item[this.props.valueIdentifier]}>{this.props.textIdentifier}</SelectOption>) 
+        })}
+      </select>
+    );
   }
 }
 

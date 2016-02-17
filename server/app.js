@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname,'../dist')));
 
 // Configure API endpoints
-// app.use('/api/roles', require('./api/roles.js'));
+app.use('/api/roles', require('./api/roles.js'));
 app.use('/api/agents', require('./api/agents.js'));
 // app.use('/api/interviews', require('./api/interviews.js'));
 

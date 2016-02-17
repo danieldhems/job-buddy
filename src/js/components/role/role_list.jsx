@@ -1,68 +1,75 @@
 import React, { Component } from 'react';
 import ApplicationDispatcher from '../../dispatcher';
-import RoleActions from '../../actions/role_actions';
-import RoleStore from '../../stores/role_store';
+import CrudActions from '../../actions/crud_actions';
+import ListStore from '../../stores/list_store';
 import List from '../common/list';
 import ListItem from '../common/list_item';
 import RoleSummary from './role_summary';
+import RoleForm from '../role_form';
+import EndPointConstants from '../../constants/end_point_constants';
 
-export default class RoleList extends Component {
+
+export default class AgentList extends Component {
 	constructor(){
 		super();
 		this.state = {};
-		this.buildInitialState()
+		this.buildInitialState();
+		this.ListStore = new ListStore();
 	}
 
 	buildInitialState(){
-		this.state.roles = [];
+		this.state.roles = null;
 	}
 
 	bindListeners(){
-		this._onRoleStoreChange = RoleStore.addListener('change', this._onRoleStoreChange.bind(this));
+		this._onListStoreChange = this.ListStore.addListener('change', this._onListStoreChange.bind(this));
 	}
 
 	removeListeners(){
-		RoleStore.removeListener('change', this._onRoleStoreChange);
+		this._onListStoreChange = null;
 	}
 
 	componentDidMount(){
 		this.bindListeners();
 		this._requestContent();
 	}
-	
-	_buildStateFromStores(){
-		this.setState({roles: roleStore.getAllRoles()});
-		console.log('Roles in state:', this.state.roles)
-	}
 
 	componentWillUnmount(){
 		this.removeListeners();
 	}
+	
+	buildStateFromStores(){
+		this.setState({items: this.ListStore.getItems()});
+		console.log('Items in state:', this.state.items)
+	}
 
-	_onRoleStoreChange(){
-		console.log('Role component receive Role Store change');
-		this._buildStateFromStores();
+	_onListStoreChange(){
+		console.log('RoleList component receive List Store change');
+		this.buildStateFromStores();
 	}
 
 	_requestContent(){
-		RoleActions.requestAllRoles();
-	}
-
-	removeListeners(){
-		this.onRoleStoreChange = RoleStore.on('change', this);
+		CrudActions.fetch(EndPointConstants.ROLE_END_POINT);
 	}
 
 	render(){
-		return (
-			<List>
-				{this.state.roles.map( item => {
-					return (
-						<ListItem key={item[0].id}>
-							<RoleSummary {...item[0]} />
-						</ListItem>
-					)
-				})}
-			</List>
-		)
+		if(this.state.items){
+			return (
+				<div>
+					<List>
+						{this.state.items.map( (item, index) => {
+							return (
+								<ListItem key={index}>
+									<RoleSummary initialItemData={item} />
+								</ListItem>
+							)
+						})}
+					</List>
+					<RoleForm userAction="create" />
+				</div>
+			)
+		} else {
+			return null;
+		}
 	}
 }

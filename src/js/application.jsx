@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import AgentList from './components/agent/agent_list';
-import AgentForm from './components/agent_form';
+import { Router, RouteHandler, Link } from 'react-router';
 
 export default class Application extends Component {
 	constructor(){
@@ -10,8 +9,20 @@ export default class Application extends Component {
 	render(){
 		return (
 			<div className="JobBuddyApplication">
-				<AgentList />
-				<AgentForm userAction="create" />
+				<nav className="navigation">
+				  <ul>
+				    <li>
+				      <Link to="/roles">Roles</Link>
+				    </li>
+				    <li>
+				      <Link to="/interviews">Interviews</Link>
+				    </li>
+				    <li>
+				      <Link to="/agents">Agents</Link>
+				    </li>
+				  </ul>
+				</nav>
+				{this.props.children}
 			</div>
 		)
 	}

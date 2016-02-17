@@ -17,6 +17,7 @@ var api = {
 				roles.salary,\
 				roles.location,\
 				roles.archived,\
+				roles.agent_id,\
 				agents.name as `agent_name`,\
 				agents.company as `agent_company`,\
 				interviews.stage as `interview_stage`\

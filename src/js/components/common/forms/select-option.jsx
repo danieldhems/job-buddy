@@ -12,7 +12,7 @@ export default class SelectOption extends Component{
 }
 
 SelectOption.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.any,
   text: PropTypes.string,
   selected: PropTypes.string,
   className: PropTypes.string,

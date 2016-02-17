@@ -5,6 +5,7 @@ import ListStore from '../../stores/list_store';
 import List from '../common/list';
 import ListItem from '../common/list_item';
 import AgentSummary from './agent_summary';
+import AgentForm from '../agent_form';
 import EndPointConstants from '../../constants/end_point_constants';
 
 export default class AgentList extends Component {
@@ -23,7 +24,11 @@ export default class AgentList extends Component {
 	}
 
 	removeListeners(){
-		ListStore.removeListener('change', this._onListStoreChange);
+		this._onListStoreChange = null;
+	}
+
+	componentWillUnmount(){
+		this.removeListeners();
 	}
 
 	componentDidMount(){
@@ -31,40 +36,35 @@ export default class AgentList extends Component {
 		this._requestContent();
 	}
 	
-	_buildStateFromStores(){
+	buildStateFromStores(){
 		this.setState({items: ListStore.getItems()});
 		console.log('Items in state:', this.state.items)
 	}
 
-	componentWillUnmount(){
-		this.removeListeners();
-	}
-
 	_onListStoreChange(){
 		console.log('AgentList component receive List Store change');
-		this._buildStateFromStores();
+		this.buildStateFromStores();
 	}
 
 	_requestContent(){
 		CrudActions.fetch(EndPointConstants.AGENT_END_POINT);
 	}
 
-	removeListeners(){
-		this.onListStoreChange = ListStore.on('change', this);
-	}
-
 	render(){
 		if(this.state.items){
 			return (
-				<List>
-					{this.state.items.map( (item, index) => {
-						return (
-							<ListItem key={index}>
-								<AgentSummary initialItemData={item} />
-							</ListItem>
-						)
-					})}
-				</List>
+				<div>
+					<List>
+						{this.state.items.map( (item, index) => {
+							return (
+								<ListItem key={index}>
+									<AgentSummary initialItemData={item} />
+								</ListItem>
+							)
+						})}
+					</List>
+					<AgentForm userAction="create" />
+				</div>
 			)
 		} else {
 			return null;
