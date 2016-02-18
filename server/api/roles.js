@@ -43,10 +43,12 @@ var api = {
 	},
 	update: function(req, res){
 		var data = req.body;
-		var id = req.params.id;
-		db.query('UPDATE `roles` SET ? WHERE `id` = ?', [data, id], function(err, result){
+		db.query('UPDATE `roles` SET ? WHERE `id` = ?', [data, data.id], function(err, result){
 			if(err) throw new Error(err);
-			console.log(result);
+			if(result.affectedRows===1){
+				_insertId = data.id;
+				api.read(req, res);
+			}
 		});
 	},
 	destroy: function(req, res){

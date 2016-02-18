@@ -24,7 +24,6 @@ export default class AgentForm extends Component {
 				CrudActions.create(EndPointConstants.AGENT_END_POINT, userData);
 				break;
 			case 'update':
-			console.log(this.props.id)
 				userData = Object.assign(userData, {id: this.props.id});
 				CrudActions.update(EndPointConstants.AGENT_END_POINT, userData);
 				break;

@@ -27,7 +27,6 @@ var api = {
 	},
 	update: function(req, res){
 		var data = req.body;
-		console.log(data)
 		db.query('UPDATE `agents` SET ? WHERE `id` = ?', [data, data.id], function(err, result){
 			if(err) throw new Error(err);
 			console.log(result);

@@ -40,9 +40,19 @@ export default class RoleForm extends Component {
 			: "";
 	}
 
+	unshiftArray(agents, currentAgentId){
+		if(agents.length>0){
+			let agentElement = agents.find(el=>el.id===currentAgentId);
+			console.log('current agent: ',agentElement);
+			return agents.length > 1 ? agents.unshift(agents[currentAgent]) : agents;
+		}
+	}
+
 	render(){
 		const heading = this.getHeading();
-		const agents = AgentStore.getAgentDataForDropdown();
+			console.log('form props: ',this.props)
+		let agents = AgentStore.getAgentDataForDropdown();
+		// agents = this.unshiftArray(agents, this.props.agent_id);
 		return (
 			<Form className="formNewRole" ref="form">
 				<Heading level={2}>{heading}</Heading>
