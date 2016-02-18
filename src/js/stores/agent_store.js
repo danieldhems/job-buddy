@@ -61,6 +61,10 @@ class AgentStore extends ListStore {
 			return this._filterByKeys(item, targetKeys)
 		});
 	}
+
+	getById(id){
+		return this._items.find(item=>item.id===id);
+	}
 }
 
 export default new AgentStore();

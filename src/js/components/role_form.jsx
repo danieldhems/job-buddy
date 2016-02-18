@@ -13,6 +13,7 @@ import CrudActions from '../actions/crud_actions';
 import AgentStore from '../stores/agent_store';
 
 import EndPointConstants from '../constants/end_point_constants';
+import ActionInterestTypes from '../constants/interest_types';
 
 export default class RoleForm extends Component {
 	constructor(){
@@ -23,7 +24,7 @@ export default class RoleForm extends Component {
 		let userData = form2js(ReactDOM.findDOMNode(this));
 		switch(this.props.userAction){
 			case 'create':
-				CrudActions.create(EndPointConstants.ROLE_END_POINT, userData);
+				CrudActions.create(EndPointConstants.ROLE_END_POINT, userData, ActionInterestTypes.ROLE);
 				break;
 			case 'update':
 				userData = Object.assign(userData, {id: this.props.id});

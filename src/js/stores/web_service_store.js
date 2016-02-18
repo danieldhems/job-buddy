@@ -54,7 +54,7 @@ class WebServiceStore extends EventEmitter {
 					);
 					break;
 				case WebServiceTypes.POST_REQUEST:
-					console.log('Web Service store receive action: ', WebServiceTypes.POST_REQUEST, action.payload.body)
+					console.log('Web Service store receive action: ', WebServiceTypes.POST_REQUEST, action.payload.body, 'with interest: ', action.payload.actionInterest)
 					this._makeWebServiceRequest(
 						action.payload.endPoint,
 						'POST',

@@ -5,8 +5,9 @@ import Button from '../common/button';
 import CrudActions from '../../actions/crud_actions';
 import ItemActions from '../../actions/item_actions';
 import RoleForm from '../role_form';
-import ItemEditStore from '../../stores/item_edit_store';
 import EndPointConstants from '../../constants/end_point_constants';
+import ItemEditStore from '../../stores/item_edit_store';
+import AgentStore from '../../stores/agent_store';
 
 export default class RoleSummary extends Component {
 	constructor(props){
@@ -15,8 +16,8 @@ export default class RoleSummary extends Component {
 	}
 
 	componentDidMount(){
-		this.buildInitialState();
 		this.bindListeners();
+		this.buildInitialState();
 	}
 
 	buildInitialState(){
@@ -24,20 +25,32 @@ export default class RoleSummary extends Component {
 		console.log('Props for role summary: ', this.props.initialItemData);
 	}
 
-	getStateFromStore(){
-		const ItemEditStoreCurrentState = ItemEditStore.getState();
-		this.setState({
-			isEditing: ItemEditStoreCurrentState.isEditing && ItemEditStoreCurrentState.itemDataInEdit.id === this.state.itemData.id,
-			itemData: ItemEditStoreCurrentState.itemDataInEdit && ItemEditStoreCurrentState.itemDataInEdit.id === this.state.itemData.id ? ItemEditStoreCurrentState.itemDataInEdit : this.props.initialItemData
-		})
+	getEditingState(){
+		const CurrentEditingState = ItemEditStore.getState();
+		let itemData, isEditing;
+
+		if(CurrentEditingState.itemDataInEdit && CurrentEditingState.itemDataInEdit.id === this.state.itemData.id){
+			itemData = CurrentEditingState.itemDataInEdit
+		} else {
+			itemData = this.props.initialItemData
+		}
+		
+		if(CurrentEditingState.isEditing && CurrentEditingState.itemDataInEdit.id === this.state.itemData.id){
+			isEditing = true;
+		} else {
+			isEditing = false;
+		}
+
+		this.setState({itemData, isEditing});
 	}
+
 
 	bindListeners(){
 		this._onItemEditStoreChange = ItemEditStore.addListener('change', this._onItemEditStoreChange.bind(this));
 	}
 
 	_onItemEditStoreChange(){
-		this.getStateFromStore();
+		this.getEditingState();
 	}
 
 	delete(){
@@ -67,7 +80,9 @@ export default class RoleSummary extends Component {
 					<Label className="role__locationLabel">Location</Label><br/>
 					<Text className="role__locationText">{this.state.itemData.location}</Text><br/>
 					<Label className="role__interviewStageLabel">Interview Stage</Label><br/>
-					<Text className="role__interviewStageText">{this.state.itemData.interviewStage}</Text><br/>
+					<Text className="role__interviewStageText">{this.state.itemData.interview_stage}</Text><br/>
+					<Label className="role__agentNameLabel">Agent</Label><br/>
+					<Text className="role__agentNameText">{this.state.itemData.agent_name}</Text><br/>
 					<Button onClick={this.delete.bind(this)}>Remove</Button>
 					<Button onClick={this.enterEditMode.bind(this)}>Edit</Button>
 				</div>

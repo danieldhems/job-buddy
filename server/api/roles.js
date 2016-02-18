@@ -1,12 +1,17 @@
 var db = require('../database.js');
 var router = require('express').Router();
 
+_insertId = null;
+
 var api = {
 	create: function(req, res){
 		var data = req.body;
 		db.query('INSERT INTO `roles` SET ?', [data], function(err, result){
 			if(err) throw new Error(err);
-			if(result.affectedRows===1) res.json({id: result.insertId});
+			if(result.affectedRows===1){
+				_insertId = result.insertId;
+				api.read(req, res);
+			}
 		});
 	},
 	read: function(req, res){
@@ -27,12 +32,13 @@ var api = {
 			LEFT JOIN `interviews` ON roles.id = interviews.role_id\
 			WHERE roles.archived = 0\
 		";
-		if(req.params.id){
-			query += " AND roles.id = " + req.params.id;
+		if(_insertId){
+			query += " AND roles.id = " + _insertId;
+			_insertId = null;
 		}
 		db.query(query, function(err, rows){
 			if(err) throw new Error(err);
-			res.json(rows);
+			res.json(rows.length > 1 ? rows : rows[0]);
 		});
 	},
 	update: function(req, res){
