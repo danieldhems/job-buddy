@@ -30,7 +30,7 @@ export default class Select extends Component{
     return (
       <select
         className={classNamesContent}
-        defaultValue={this.state.value}
+        defaultValue={this.props.defaultValue}
         name={this.props.name}
         disabled={this.props.disabled}
         onChange={this.handleInputChange}

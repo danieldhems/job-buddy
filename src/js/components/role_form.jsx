@@ -40,19 +40,9 @@ export default class RoleForm extends Component {
 			: "";
 	}
 
-	unshiftArray(agents, currentAgentId){
-		if(agents.length>0){
-			let agentElement = agents.find(el=>el.id===currentAgentId);
-			console.log('current agent: ',agentElement);
-			return agents.length > 1 ? agents.unshift(agents[currentAgent]) : agents;
-		}
-	}
-
 	render(){
 		const heading = this.getHeading();
-			console.log('form props: ',this.props)
 		let agents = AgentStore.getAgentDataForDropdown();
-		// agents = this.unshiftArray(agents, this.props.agent_id);
 		return (
 			<Form className="formNewRole" ref="form">
 				<Heading level={2}>{heading}</Heading>
@@ -65,7 +55,7 @@ export default class RoleForm extends Component {
 				<Text>Location</Text>
 				<Input type="text" name="location" defaultValue={this.props.location || ""} className="form formNew form_newRole__locationField" />
 				<Text>Agent</Text>
-				<Select name="agent_id" items={agents} valueIdentifier="id" textIdentifier="name" className="form formNew form_newRole__agentField" />
+				<Select name="agent_id" items={agents} defaultValue={this.props.agent_id} valueIdentifier="id" textIdentifier="name" className="form formNew form_newRole__agentField" />
 				<SubmitButton name="submitButton" defaultValue="Add" onClick={this.handleSubmit.bind(this)} />
 				<Button onClick={this.props.onCancel}>Cancel</Button>
 			</Form>

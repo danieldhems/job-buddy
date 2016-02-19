@@ -96,7 +96,7 @@ class WebServiceStore extends EventEmitter {
 						function(responseData){
 							ApplicationDispatcher.dispatch({
 								type: WebServiceTypes.ON_PUT_REQUEST_SUCCESS,
-								payload: action.payload.body
+								payload: responseData
 							});
 						},
 						(error) => {
