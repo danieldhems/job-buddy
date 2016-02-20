@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Form from './common/forms/form';
 import Input from './common/forms/input';
+import PredictiveInput from './common/forms/predictive_input';
 import Select from './common/forms/select';
 import Button from './common/button';
 import Textarea from './common/forms/textarea';
@@ -55,6 +56,7 @@ export default class RoleForm extends Component {
 				<Text>Location</Text>
 				<Input type="text" name="location" defaultValue={this.props.location || ""} className="form formNew form_newRole__locationField" />
 				<Text>Agent</Text>
+				<PredictiveInput name="agentNameInput" knownInputs={agents} />
 				<Select name="agent_id" items={agents} defaultValue={this.props.agent_id} valueIdentifier="id" textIdentifier="name" className="form formNew form_newRole__agentField" />
 				<SubmitButton name="submitButton" defaultValue="Add" onClick={this.handleSubmit.bind(this)} />
 				<Button onClick={this.props.onCancel}>Cancel</Button>
