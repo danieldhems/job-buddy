@@ -1,18 +1,43 @@
-var db = require('../database.js');
+"use strict";
+
+var db = require('../database');
 var router = require('express').Router();
 
-_insertId = null;
+var _insertId = null;
 
 var api = {
 	create: function(req, res){
 		var data = req.body;
-		db.query('INSERT INTO `roles` SET ?', [data], function(err, result){
-			if(err) throw new Error(err);
-			if(result.affectedRows===1){
-				_insertId = result.insertId;
-				api.read(req, res);
-			}
-		});
+		if(data['agent_name']){
+			var agentData = {name: data['agent_name']};
+			// Create new agent first
+			db.query('INSERT INTO `agents` SET ?', [agentData],
+			(err, result) => {
+				if(err) throw new Error(err);
+				if(result.affectedRows===1){
+					_insertId = result.insertId;
+					data['agent_id'] = _insertId;
+					delete data['agent_name'];
+					// Create new role with insertId returned from creation of agent
+					db.query('INSERT INTO `roles` SET ?', [data],
+					(err, result) => {
+						if(err) throw new Error(err);
+						if(result.affectedRows===1){
+							_insertId = result.insertId;
+							api.read(req, res);
+						}
+					})
+				}
+			})
+		} else{
+			db.query('INSERT INTO `roles` SET ?', [data], function(err, result){
+				if(err) throw new Error(err);
+				if(result.affectedRows===1){
+					_insertId = result.insertId;
+					api.read(req, res);
+				}
+			})
+		}
 	},
 	read: function(req, res){
 		var query = "\
