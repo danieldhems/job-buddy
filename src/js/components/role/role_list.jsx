@@ -14,22 +14,33 @@ export default class RoleList extends Component {
 		super();
 		this.state = {};
 		this.buildInitialState();
+		this.bindListeners();
 	}
 
 	buildInitialState(){
 		this.state.items = [];
 	}
 
+	_onRoleStoreChange(){
+		console.log('RoleList component receive List Store change');
+		this.buildStateFromStores();
+	}
+
 	bindListeners(){
-		this._onRoleStoreChange = RoleStore.addListener('change', this._onRoleStoreChange.bind(this));
+		this._onRoleStoreChange = this._onRoleStoreChange.bind(this);
+	}
+
+	addListeners(){
+		RoleStore.addListener('change', this._onRoleStoreChange);
 	}
 
 	removeListeners(){
-		this._onRoleStoreChange = null;
+		console.log(typeof this._onRoleStoreChange);
+		RoleStore.removeListener('change', this._onRoleStoreChange);
 	}
 
 	componentDidMount(){
-		this.bindListeners();
+		this.addListeners();
 		this._requestContent();
 	}
 
@@ -42,10 +53,6 @@ export default class RoleList extends Component {
 		console.log('Items in state:', this.state.items)
 	}
 
-	_onRoleStoreChange(){
-		console.log('RoleList component receive List Store change');
-		this.buildStateFromStores();
-	}
 
 	_requestContent(){
 		CrudActions.fetch(EndPointConstants.ROLE_END_POINT, ActionInterestConstants.ROLE);

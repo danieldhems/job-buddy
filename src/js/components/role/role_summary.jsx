@@ -7,22 +7,37 @@ import ItemActions from '../../actions/item_actions';
 import RoleForm from '../role_form';
 import EndPointConstants from '../../constants/end_point_constants';
 import ItemEditStore from '../../stores/item_edit_store';
-import AgentStore from '../../stores/agent_store';
 
 export default class RoleSummary extends Component {
 	constructor(props){
 		super(props);
 		this.state = {};
+		this.addListeners();
+		this.bindListeners();
 	}
 
 	componentDidMount(){
-		this.bindListeners();
 		this.buildInitialState();
+	}
+
+	componentWillUnmount() {
+	    this.removeListeners()  
+	}
+
+	bindListeners(){
+		this._onItemEditStoreChange = this._onItemEditStoreChange.bind(this);
+	}
+
+	addListeners(){
+		ItemEditStore.addListener('change', this._onItemEditStoreChange);
+	}
+	
+	removeListeners(){
+		ItemEditStore.removeListener('change', this._onItemEditStoreChange);	
 	}
 
 	buildInitialState(){
 		this.setState({isEditing:false, itemData: this.props.initialItemData});
-		console.log('Props for role summary: ', this.props.initialItemData);
 	}
 
 	getEditingState(){
@@ -45,9 +60,6 @@ export default class RoleSummary extends Component {
 	}
 
 
-	bindListeners(){
-		this._onItemEditStoreChange = ItemEditStore.addListener('change', this._onItemEditStoreChange.bind(this));
-	}
 
 	_onItemEditStoreChange(){
 		this.getEditingState();
@@ -67,7 +79,7 @@ export default class RoleSummary extends Component {
 	}
 
 	render(){
-		console.log('Rendering role summary component with itemData: ', this.state.itemData);
+		// console.log('Rendering role summary component with itemData: ', this.state.itemData);
 		if(this.state.itemData && !this.state.isEditing){
 			return (
 				<div>

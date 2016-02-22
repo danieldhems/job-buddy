@@ -1,54 +1,60 @@
 import React, { Component } from 'react';
 import ApplicationDispatcher from '../../dispatcher';
 import CrudActions from '../../actions/crud_actions';
-import ListStore from '../../stores/list_store';
+import AgentStore from '../../stores/agent_store';
 import List from '../common/list';
 import ListItem from '../common/list_item';
 import AgentSummary from './agent_summary';
 import AgentForm from '../agent_form';
 import EndPointConstants from '../../constants/end_point_constants';
+import ActionInterestConstants from '../../constants/interest_types';
 
 export default class AgentList extends Component {
 	constructor(){
 		super();
 		this.state = {};
-		this.ListStore = new ListStore();
 		this.buildInitialState();
+		this.bindListeners();
 	}
 
 	buildInitialState(){
 		this.state.agents = null;
 	}
+	
+	buildStateFromStores(){
+		this.setState({items: AgentStore.getItems()});
+		console.log('Items in state:', this.state.items)
+	}
+	
 
 	bindListeners(){
-		this._onListStoreChange = this.ListStore.addListener('change', this._onListStoreChange.bind(this));
+		this._onAgentStoreChange = this._onAgentStoreChange.bind(this);
+	}
+
+	addListeners(){
+		AgentStore.addListener('change', this._onAgentStoreChange);
 	}
 
 	removeListeners(){
-		this._onListStoreChange = null;
+		AgentStore.removeListener('change', this._onAgentStoreChange);
 	}
 
+	componentDidMount(){
+		this.addListeners();
+		this._requestContent();
+	}
+	
 	componentWillUnmount(){
 		this.removeListeners();
 	}
 
-	componentDidMount(){
-		this.bindListeners();
-		this._requestContent();
-	}
-	
-	buildStateFromStores(){
-		this.setState({items: this.ListStore.getItems()});
-		console.log('Items in state:', this.state.items)
-	}
-
-	_onListStoreChange(){
+	_onAgentStoreChange(){
 		console.log('AgentList component receive List Store change');
 		this.buildStateFromStores();
 	}
 
 	_requestContent(){
-		CrudActions.fetch(EndPointConstants.AGENT_END_POINT);
+		CrudActions.fetch(EndPointConstants.AGENT_END_POINT, ActionInterestConstants.AGENT);
 	}
 
 	render(){

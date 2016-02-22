@@ -12,11 +12,32 @@ export default class AgentSummary extends Component {
 	constructor(props){
 		super(props);
 		this.state = {};
+		this.addListeners();
+		this.bindListeners();
+	}
+
+	bindListeners(){
+		this._onItemEditStoreChange = this._onItemEditStoreChange.bind(this);
+	}
+
+	addListeners(){
+		ItemEditStore.addListener('change', this._onItemEditStoreChange);
+	}
+
+	removeListeners(){
+		ItemEditStore.removeListener('change', this._onItemEditStoreChange);
+	}
+
+	_onItemEditStoreChange(){
+		this.getStateFromStore();
 	}
 
 	componentDidMount(){
 		this.buildInitialState();
-		this.bindListeners();
+	}
+
+	componentWillUnmount() {
+	 	this.removeListeners();     
 	}
 
 	buildInitialState(){
@@ -32,13 +53,6 @@ export default class AgentSummary extends Component {
 		})
 	}
 
-	bindListeners(){
-		this._onItemEditStoreChange = ItemEditStore.addListener('change', this._onItemEditStoreChange.bind(this));
-	}
-
-	_onItemEditStoreChange(){
-		this.getStateFromStore();
-	}
 
 	deleteAgent(){
 		CrudActions.delete(EndPointConstants.AGENT_END_POINT, this.state.itemData.id);

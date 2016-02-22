@@ -1,18 +1,16 @@
 import { EventEmitter } from 'events';
 import ApplicationDispatcher from '../dispatcher';
 import WebServiceTypes from '../constants/web_service_types';
-import WebServiceStore from './web_service_store';
-import ListStore from './list_store';
+import AbstractStore from './abstract_store';
 import CrudActions from '../actions/crud_actions';
 import EndPointConstants from '../constants/end_point_constants';
 import ActionInterestConstants from '../constants/interest_types';
 
-class AgentStore extends ListStore {
+class AgentStore extends AbstractStore {
 
 	constructor(){
 		super();
 		this._items = [];
-		this.ListStore = new ListStore();
 		CrudActions.fetch(EndPointConstants.AGENT_END_POINT, ActionInterestConstants.AGENT);
 	}
 
