@@ -1,1 +1,0 @@
-import {ApplicationDispatcher} from './dispatcher';
