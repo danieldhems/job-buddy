@@ -8,36 +8,15 @@ var _insertId = null;
 var api = {
 	create: function(req, res){
 		var data = req.body;
-		if(data['agent_name']){
-			var agentData = {name: data['agent_name']};
-			// Create new agent first
-			db.query('INSERT INTO `agents` SET ?', [agentData],
-			(err, result) => {
-				if(err) throw new Error(err);
-				if(result.affectedRows===1){
-					_insertId = result.insertId;
-					data['agent_id'] = _insertId;
-					delete data['agent_name'];
-					// Create new role with insertId returned from creation of agent
-					db.query('INSERT INTO `roles` SET ?', [data],
-					(err, result) => {
-						if(err) throw new Error(err);
-						if(result.affectedRows===1){
-							_insertId = result.insertId;
-							api.read(req, res);
-						}
-					})
-				}
-			})
-		} else{
-			db.query('INSERT INTO `roles` SET ?', [data], function(err, result){
-				if(err) throw new Error(err);
-				if(result.affectedRows===1){
-					_insertId = result.insertId;
-					api.read(req, res);
-				}
-			})
-		}
+		var tableName = req.baseUrl.substr( req.baseUrl.lastIndexOf('/')+1 );
+		// Create new role with insertId returned from creation of agent
+		db.query('INSERT INTO `'+tableName+'` SET ?', [data], (err, result) => {
+			if(err) throw new Error(err);
+			if(result.affectedRows===1){
+				_insertId = result.insertId;
+				api.read(req, res);
+			}
+		})
 	},
 	read: function(req, res){
 		var query = "\
@@ -68,13 +47,29 @@ var api = {
 	},
 	update: function(req, res){
 		var data = req.body;
-		db.query('UPDATE `roles` SET ? WHERE `id` = ?', [data, data.id], function(err, result){
-			if(err) throw new Error(err);
-			if(result.affectedRows===1){
-				_insertId = data.id;
-				api.read(req, res);
-			}
-		});
+		if(data['agent_name']){
+			db.query('INSERT INTO `agents` SET name="'+data['agent_name']+'"', function(err, result){
+				if(err) throw new Error(err);0
+				_insertId = result.insertId;
+				delete data['agent_name'];
+				data.agent_id = _insertId;
+				db.query('UPDATE `roles` SET ? WHERE `id` = ?', [data, data.id], function(err, result){
+					if(err) throw new Error(err);
+					if(result.affectedRows===1){
+						_insertId = data.id;
+						api.read(req, res);
+					}
+				});
+			})
+		} else {
+			db.query('UPDATE `roles` SET ? WHERE `id` = ?', [data, data.id], function(err, result){
+				if(err) throw new Error(err);
+				if(result.affectedRows===1){
+					_insertId = data.id;
+					api.read(req, res);
+				}
+			});
+		}
 	},
 	destroy: function(req, res){
 		var id = parseInt(req.body.id,10);

@@ -11,7 +11,8 @@ class AgentStore extends AbstractStore {
 	constructor(){
 		super();
 		this._items = [];
-		CrudActions.fetch(EndPointConstants.AGENT_END_POINT, ActionInterestConstants.AGENT);
+		this.bindAll(this);
+		this.registerActionInterests();
 	}
 
 	registerActionInterests(){
@@ -20,48 +21,29 @@ class AgentStore extends AbstractStore {
 				case WebServiceTypes.ON_GET_REQUEST_SUCCESS:
 					console.log('Agent store receive action: ', WebServiceTypes.ON_GET_REQUEST_SUCCESS, 'with interest: ', action.payload.actionInterest);
 					if(action.payload.actionInterest === ActionInterestConstants.AGENT){
-						this.updateState(action.payload.responseData);
+						this.updateItems(action.payload.responseData);
+						this.emit('change');
+					}
+					break;
+				case WebServiceTypes.ON_PUT_REQUEST_SUCCESS:
+					console.log('Agent store receive action: ', WebServiceTypes.ON_PUT_REQUEST_SUCCESS, 'with interest: ', action.payload.actionInterest);
+					if(action.payload.actionInterest === ActionInterestConstants.AGENT){
+						this.updateItem(action.payload.responseData);
 						this.emit('change');
 					}
 					break;
 				case WebServiceTypes.ON_POST_REQUEST_SUCCESS:
 					console.log('Agent store receive action: ', WebServiceTypes.ON_POST_REQUEST_SUCCESS);
-					this.handlePostRequestSuccess(action.payload);
 					this.emit('change');
 					break;
 				case WebServiceTypes.ON_DELETE_REQUEST_SUCCESS:
 					console.log('Agent store receive action: ', WebServiceTypes.ON_DELETE_REQUEST_SUCCESS);
-					this.handleDeleteRequestSuccess(action.payload);
+					this.removeItem(action.payload.id);
 					this.emit('change');
 					break;
 				default:
 			}
 		})
-	}
-
-	updateState(payload){
-		console.log('Agent store updating state with: ', payload);
-		this._items = payload;
-	}
-
-	_filterByKeys(obj, keys){
-		let filteredObject = {};
-		Object.keys(obj).forEach( key => {
-			if( keys.find(i => i===key) ) filteredObject[key] = obj[key];
-		});
-		return filteredObject;
-	}
-
-	getAgentDataForDropdown(targetKeys = ['id','name']){
-		console.log('Getting agent data for dropdown')
-		// get all items, reduced to name and IDs only
-		return this.getItems().map( item => {
-			return this._filterByKeys(item, targetKeys)
-		});
-	}
-
-	getById(id){
-		return this._items.find(item=>item.id===id);
 	}
 }
 

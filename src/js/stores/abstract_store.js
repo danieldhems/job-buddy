@@ -1,57 +1,59 @@
 import { EventEmitter } from 'events';
 import ApplicationDispatcher from '../dispatcher';
 import WebServiceTypes from '../constants/web_service_types';
-import WebServiceStore from './web_service_store';
 
 class AbstractStore extends EventEmitter {
 
 	constructor(){
 		super();
-		this._items = [];
-		this.registerActionInterests();
 	}
 
-	registerActionInterests(){
-		this.dispatchToken = ApplicationDispatcher.register( action => {
-			switch(action.type){
-				case WebServiceTypes.ON_GET_REQUEST_SUCCESS:
-					console.log('Abstract store receive action: ', WebServiceTypes.ON_GET_REQUEST_SUCCESS);
-					this.updateState(action.payload.responseData);
-					this.emit('change');
-					break;
-				case WebServiceTypes.ON_POST_REQUEST_SUCCESS:
-					console.log('Abstract store receive action: ', WebServiceTypes.ON_POST_REQUEST_SUCCESS);
-					this.handlePostRequestSuccess(action.payload);
-					this.emit('change');
-					break;
-				case WebServiceTypes.ON_DELETE_REQUEST_SUCCESS:
-					console.log('Abstract store receive action: ', WebServiceTypes.ON_DELETE_REQUEST_SUCCESS);
-					this.handleDeleteRequestSuccess(action.payload);
-					this.emit('change');
-					break;
-				default:
-			}
-		})
+	bindAll(context){
+		this.updateItems = this.updateItems.bind(context);
+		this.updateItem = this.updateItem.bind(context);
+		this.getAll = this.getAll.bind(context);
+		this.getAllFiltered = this.getAllFiltered.bind(context);
+		this.getById = this.getById.bind(context);
 	}
 
-	updateState(items){
+	updateItems(items){
 		this._items = items;
 	}
 
-	handlePostRequestSuccess(itemData){
-		this._items.push(itemData);
+	updateItem(item){
+		this._items.map(i=>{
+			if(i['id']===item['id']) Object.assign(i,item);
+		});
 	}
 
-	handleDeleteRequestSuccess(payload){
-		this._items.map( (item, index, arr) => {
-			if(item.id === payload.id) delete arr[index]
-		})
+	removeItem(id){
+		this._items.map((x,i)=>{
+			if(x['id']===item['id']) this._items.splice(i,1);
+		});		
 	}
 
-	getItems(){
+	getAll(){
+		console.log('Getting all items', this._items)
 		return this._items;
 	}
 
+	getById(id){
+		return this._items.find(item=>item[id]===id)
+	}
+
+	getAllFiltered(filterBy){
+		console.log(this.getAll())
+		return this.getAll().forEach(item=>this._filterObjectByKeys(item, filterBy))
+		// return this._filterObjectByKeys(this.getAll(), filterBy);
+	}
+
+	_filterObjectByKeys(obj, targetKeys){
+		let filteredObject = {};
+		Object.keys(obj).forEach( key => {
+			if( targetKeys.find(i => i===key) ) filteredObject[key] = obj[key];
+		});
+		return filteredObject;
+	}
 }
 
 export default AbstractStore;

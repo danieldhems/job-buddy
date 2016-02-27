@@ -1,20 +1,19 @@
 import { EventEmitter } from 'events';
 import ApplicationDispatcher from '../dispatcher';
 import WebServiceTypes from '../constants/web_service_types';
-import WebServiceStore from './web_service_store';
 import ItemTypes from '../constants/item_types';
+import AbstractStore from './abstract_store';
 
-class ItemEditStore extends EventEmitter {
+class ItemEditStore extends AbstractStore {
 
-	constructor(options){
-		super(options);
+	constructor(){
+		super();
 		this.state = {};
 		this.registerActionInterests();
 	}
 
-	updateItemWithChangedData(data){
+	updateState(data){
 		this.state.itemDataInEdit = Object.assign(this.state.itemDataInEdit, data);
-		console.log('update result: ', this.state.itemDataInEdit);
 	}
 
 	enterEditMode(){
@@ -54,7 +53,7 @@ class ItemEditStore extends EventEmitter {
 					break;
 				case WebServiceTypes.ON_PUT_REQUEST_SUCCESS:
 					console.log('Item store receive action: ', WebServiceTypes.ON_PUT_REQUEST_SUCCESS, 'with payload: ', action.payload);
-					this.updateItemWithChangedData(action.payload);
+					this.updateState(action.payload.responseData);
 					this.exitEditMode();
 					this.emit('change');
 					break;

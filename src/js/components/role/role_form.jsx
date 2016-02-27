@@ -1,24 +1,25 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import Form from './common/forms/form';
-import Input from './common/forms/input';
-import ChooseOrCreateNew from './common/forms/choose_or_create_new';
-import Select from './common/forms/select';
-import Button from './common/button';
-import Textarea from './common/forms/textarea';
-import Heading from './common/heading';
-import SubmitButton from './common/forms/submit-button';
-import Text from './common/text';
-import form2js from '../utils/form2js';
-import CrudActions from '../actions/crud_actions';
-import AgentStore from '../stores/agent_store';
+import Form from '../common/forms/form';
+import Input from '../common/forms/input';
+import ChooseOrCreateNew from '../common/forms/choose_or_create_new';
+import Select from '../common/forms/select';
+import Button from '../common/button';
+import Textarea from '../common/forms/textarea';
+import Heading from '../common/heading';
+import SubmitButton from '../common/forms/submit-button';
+import Text from '../common/text';
+import form2js from '../../utils/form2js';
+import CrudActions from '../../actions/crud_actions';
+import AgentStore from '../../stores/agent_store';
+import EndPointConstants from '../../constants/end_point_constants';
+import ActionInterestTypes from '../../constants/interest_types';
+import AbstractComponent from '../abstract_component';
 
-import EndPointConstants from '../constants/end_point_constants';
-import ActionInterestTypes from '../constants/interest_types';
-
-export default class RoleForm extends Component {
+export default class RoleForm extends AbstractComponent {
 	constructor(){
 		super();
+		if(AgentStore.getAll().length === 0) CrudActions.fetch(EndPointConstants.AGENT_END_POINT, ActionInterestTypes.AGENT);
 	}
 
 	handleSubmit(){
@@ -39,11 +40,11 @@ export default class RoleForm extends Component {
 		return this.props.userAction === 'create' ? 'New role'
 			: this.props.userAction === 'update' ? 'Edit role'
 			: "";
-	}
+	}  
 
 	render(){
 		const heading = this.getHeading();
-		let agents = AgentStore.getAgentDataForDropdown();
+		let agents = AgentStore.getAll();
 		return (
 			<Form className="formNewRole" ref="form">
 				<Heading level={2}>{heading}</Heading>

@@ -1,44 +1,45 @@
 import React, { Component } from 'react';
 import ApplicationDispatcher from '../../dispatcher';
 import CrudActions from '../../actions/crud_actions';
-import RoleStore from '../../stores/role_store';
+import InterviewStore from '../../stores/interview_store';
 import List from '../common/list';
 import ListItem from '../common/list_item';
-import RoleSummary from './role_summary';
-import RoleForm from './role_form';
+import InterviewSummary from './interview_summary';
+import InterviewForm from './interview_form';
 import EndPointConstants from '../../constants/end_point_constants';
 import ActionInterestConstants from '../../constants/interest_types';
 import AbstractComponent from '../abstract_component';
 
-export default class RoleList extends AbstractComponent {
+export default class InterviewList extends AbstractComponent {
 	constructor(){
 		super();
 	}
 
-	_onRoleStoreChange(){
-		console.log('RoleList component receive List Store change');
+	_onInterviewStoreChange(){
+		console.log('InterviewList component receive List Store change');
 		this.buildStateFromStores();
 	}
 
 	bindListeners(){
-		this._onRoleStoreChange = this._onRoleStoreChange.bind(this);
+		this._onInterviewStoreChange = this._onInterviewStoreChange.bind(this);
 	}
 
 	addListeners(){
-		RoleStore.addListener('change', this._onRoleStoreChange);
+		InterviewStore.addListener('change', this._onInterviewStoreChange);
 	}
 
 	removeListeners(){
-		RoleStore.removeListener('change', this._onRoleStoreChange);
+		console.log(typeof this._onInterviewStoreChange);
+		InterviewStore.removeListener('change', this._onInterviewStoreChange);
 	}
 	
 	buildStateFromStores(){
-		this.setState({items: RoleStore.getAll()});
+		this.setState({items: InterviewStore.getAll()});
 		console.log('Items in state:', this.state.items)
 	}
 
 	_requestContent(){
-		CrudActions.fetch(EndPointConstants.ROLE_END_POINT, ActionInterestConstants.ROLE);
+		CrudActions.fetch(EndPointConstants.INTERVIEW_END_POINT, ActionInterestConstants.INTERVIEW);
 	}
 
 	render(){
@@ -49,12 +50,12 @@ export default class RoleList extends AbstractComponent {
 						{this.state.items.map( (item, index) => {
 							return (
 								<ListItem key={index}>
-									<RoleSummary initialItemData={item} />
+									<InterviewSummary initialItemData={item} />
 								</ListItem>
 							)
 						})}
 					</List>
-					<RoleForm userAction="create" />
+					<InterviewForm userAction="create" />
 				</div>
 			)
 		} else {

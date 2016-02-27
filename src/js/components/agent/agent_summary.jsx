@@ -4,16 +4,15 @@ import Label from '../common/label';
 import Button from '../common/button';
 import CrudActions from '../../actions/crud_actions';
 import ItemActions from '../../actions/item_actions';
-import AgentForm from '../agent_form';
+import AgentForm from './agent_form';
 import ItemEditStore from '../../stores/item_edit_store';
 import EndPointConstants from '../../constants/end_point_constants';
+import ActionInterestTypes from '../../constants/interest_types';
+import AbstractComponent from '../abstract_component';
 
-export default class AgentSummary extends Component {
-	constructor(props){
-		super(props);
-		this.state = {};
-		this.addListeners();
-		this.bindListeners();
+export default class AgentSummary extends AbstractComponent {
+	constructor(){
+		super();
 	}
 
 	bindListeners(){
@@ -27,35 +26,27 @@ export default class AgentSummary extends Component {
 	removeListeners(){
 		ItemEditStore.removeListener('change', this._onItemEditStoreChange);
 	}
-
-	_onItemEditStoreChange(){
-		this.getStateFromStore();
-	}
-
-	componentDidMount(){
-		this.buildInitialState();
-	}
-
-	componentWillUnmount() {
-	 	this.removeListeners();     
-	}
-
-	buildInitialState(){
-		this.setState({isEditing:false, itemData: this.props.initialItemData});
-	}
-
+	
 	getStateFromStore(){
 		const ItemEditStoreCurrentState = ItemEditStore.getState();
 		console.log(ItemEditStoreCurrentState)
 		this.setState({
 			isEditing: ItemEditStoreCurrentState.isEditing && ItemEditStoreCurrentState.itemDataInEdit.id === this.state.itemData.id,
 			itemData: ItemEditStoreCurrentState.itemDataInEdit && ItemEditStoreCurrentState.itemDataInEdit.id === this.state.itemData.id ? ItemEditStoreCurrentState.itemDataInEdit : this.props.initialItemData
-		})
+		});
 	}
 
+	_onItemEditStoreChange(){
+		this.getStateFromStore();
+	}
+
+	buildInitialState(){
+		console.log('state', this.state);
+		this.setState({isEditing:false, itemData: this.props.initialItemData});
+	}
 
 	deleteAgent(){
-		CrudActions.delete(EndPointConstants.AGENT_END_POINT, this.state.itemData.id);
+		CrudActions.delete(EndPointConstants.AGENT_END_POINT, this.state.itemData.id, ActionInterestTypes.AGENT);
 	}
 
 	enterEditMode(){

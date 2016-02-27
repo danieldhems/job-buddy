@@ -11,7 +11,19 @@ var api = {
 	},
 	read: function(req, res){
 		var query = "\
-			SELECT *\
+			SELECT\
+				i.id,\
+				i.datetime,\
+				i.contact,\
+				i.stage,\
+				r.id as role_id,\
+				r.title,\
+				r.salary,\
+				a.name as agent_name,\
+				a.phone_number as agent_phone_number,\
+				a.mobile_number as agent_mobile_number,\
+				a.email_address as agent_email_address,\
+				a.company as agent_company\
 			FROM `interviews` i\
 			LEFT JOIN `agents` a\
 				ON i.agent_id = a.id\

@@ -4,12 +4,12 @@ import Label from '../common/label';
 import Button from '../common/button';
 import CrudActions from '../../actions/crud_actions';
 import ItemActions from '../../actions/item_actions';
-import RoleForm from './role_form';
+import InterviewForm from './interview_form';
 import EndPointConstants from '../../constants/end_point_constants';
 import ItemEditStore from '../../stores/item_edit_store';
 import AbstractComponent from '../abstract_component';
 
-export default class RoleSummary extends AbstractComponent {
+export default class InterviewSummary extends AbstractComponent {
 	constructor(props){
 		super(props);
 	}
@@ -54,7 +54,7 @@ export default class RoleSummary extends AbstractComponent {
 	}
 
 	delete(){
-		CrudActions.delete(EndPointConstants.ROLE_END_POINT, this.state.itemData.id);
+		CrudActions.delete(EndPointConstants.INTERVIEW_END_POINT, this.state.itemData.id);
 	}
 
 	enterEditMode(){
@@ -67,28 +67,28 @@ export default class RoleSummary extends AbstractComponent {
 	}
 
 	render(){
-		// console.log('Rendering role summary component with itemData: ', this.state.itemData);
+		// console.log('Rendering interview summary component with itemData: ', this.state.itemData);
 		if(this.state.itemData && !this.state.isEditing){
 			return (
 				<div>
-					<Label className="role__titleLabel">Title</Label><br/>
-					<Text className="role__titleText">{this.state.itemData.title}</Text><br/>
-					<Label className="role__clientLabel">Client</Label><br/>
-					<Text className="role__clientText">{this.state.itemData.client}</Text><br/>
-					<Label className="role__salaryLabel">Salary</Label><br/>
-					<Text className="role__salaryText">{this.state.itemData.salary}</Text><br/>
-					<Label className="role__locationLabel">Location</Label><br/>
-					<Text className="role__locationText">{this.state.itemData.location}</Text><br/>
-					<Label className="role__interviewStageLabel">Interview Stage</Label><br/>
-					<Text className="role__interviewStageText">{this.state.itemData.interview_stage}</Text><br/>
-					<Label className="role__agentNameLabel">Agent</Label><br/>
-					<Text className="role__agentNameText">{this.state.itemData.agent_name}</Text><br/>
+					<Label className="interview__titleLabel">Title</Label><br/>
+					<Text className="interview__titleText">{this.state.itemData.title}</Text><br/>
+					<Label className="interview__clientLabel">Client</Label><br/>
+					<Text className="interview__clientText">{this.state.itemData.client}</Text><br/>
+					<Label className="interview__salaryLabel">Salary</Label><br/>
+					<Text className="interview__salaryText">{this.state.itemData.salary}</Text><br/>
+					<Label className="interview__locationLabel">Location</Label><br/>
+					<Text className="interview__locationText">{this.state.itemData.location}</Text><br/>
+					<Label className="interview__interviewStageLabel">Interview Stage</Label><br/>
+					<Text className="interview__interviewStageText">{this.state.itemData.interview_stage}</Text><br/>
+					<Label className="interview__agentNameLabel">Agent</Label><br/>
+					<Text className="interview__agentNameText">{this.state.itemData.agent_name}</Text><br/>
 					<Button onClick={this.delete.bind(this)}>Remove</Button>
 					<Button onClick={this.enterEditMode.bind(this)}>Edit</Button>
 				</div>
 			)
 		} else {
-			return <RoleForm userAction="update" onCancel={this.cancelEditMode.bind(this)} {...this.state.itemData} />
+			return <InterviewForm userAction="update" onCancel={this.cancelEditMode.bind(this)} {...this.state.itemData} />
 		}
 	}
 }

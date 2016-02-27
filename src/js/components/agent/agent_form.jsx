@@ -1,18 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import Form from './common/forms/form';
-import Input from './common/forms/input';
-import Button from './common/button';
-import Textarea from './common/forms/textarea';
-import Heading from './common/heading';
-import SubmitButton from './common/forms/submit-button';
-import Text from './common/text';
-import form2js from '../utils/form2js';
-import CrudActions from '../actions/crud_actions';
+import Form from '../common/forms/form';
+import Input from '../common/forms/input';
+import Button from '../common/button';
+import Textarea from '../common/forms/textarea';
+import Heading from '../common/heading';
+import SubmitButton from '../common/forms/submit-button';
+import Text from '../common/text';
+import form2js from '../../utils/form2js';
+import CrudActions from '../../actions/crud_actions';
 
-import EndPointConstants from '../constants/end_point_constants';
+import EndPointConstants from '../../constants/end_point_constants';
 
-export default class AgentForm extends Component {
+import AbstractComponent from '../abstract_component';
+
+export default class AgentForm extends AbstractComponent {
 	constructor(){
 		super();
 	}

@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import AgentList from './components/agent/agent_list';
 import RoleList from './components/role/role_list';
+import InterviewList from './components/interview/interview_list';
 import Application from './application';
 
 render((
@@ -11,6 +12,7 @@ render((
 			<IndexRoute component={AgentList} />
 			<Route path="agents" component={AgentList} />
 			<Route path="roles" component={RoleList} />
+			<Route path="interviews" component={InterviewList} />
 		</Route>
 	</Router>
-), document.body);
+), document.querySelector('#main'));

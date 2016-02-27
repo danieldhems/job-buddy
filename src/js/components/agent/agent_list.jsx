@@ -1,31 +1,28 @@
 import React, { Component } from 'react';
 import ApplicationDispatcher from '../../dispatcher';
-import CrudActions from '../../actions/crud_actions';
+
 import AgentStore from '../../stores/agent_store';
+import CrudActions from '../../actions/crud_actions';
+
+import AbstractComponent from '../abstract_component';
 import List from '../common/list';
 import ListItem from '../common/list_item';
 import AgentSummary from './agent_summary';
-import AgentForm from '../agent_form';
+import AgentForm from './agent_form';
+
 import EndPointConstants from '../../constants/end_point_constants';
 import ActionInterestConstants from '../../constants/interest_types';
 
-export default class AgentList extends Component {
+export default class AgentList extends AbstractComponent {
 	constructor(){
 		super();
-		this.state = {};
-		this.buildInitialState();
 		this.bindListeners();
-	}
-
-	buildInitialState(){
-		this.state.agents = null;
 	}
 	
 	buildStateFromStores(){
-		this.setState({items: AgentStore.getItems()});
+		this.setState({items: AgentStore.getAll()});
 		console.log('Items in state:', this.state.items)
 	}
-	
 
 	bindListeners(){
 		this._onAgentStoreChange = this._onAgentStoreChange.bind(this);
@@ -37,15 +34,6 @@ export default class AgentList extends Component {
 
 	removeListeners(){
 		AgentStore.removeListener('change', this._onAgentStoreChange);
-	}
-
-	componentDidMount(){
-		this.addListeners();
-		this._requestContent();
-	}
-	
-	componentWillUnmount(){
-		this.removeListeners();
 	}
 
 	_onAgentStoreChange(){

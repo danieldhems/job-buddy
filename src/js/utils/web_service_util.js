@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
-export default class WebServiceUtil {
-	static request(url, type, data, success, failure) {
+class WebServiceUtil {
+	request(url, type, data, success, failure) {
 		console.log("Making web service request:", url, type, data);
 		$.ajax({
 			url: url,
@@ -19,3 +19,5 @@ export default class WebServiceUtil {
 		});
 	}
 }
+
+export default new WebServiceUtil();
