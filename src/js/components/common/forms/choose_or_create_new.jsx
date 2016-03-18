@@ -10,7 +10,7 @@ export default class ChooseOrCreateNew extends Component {
   constructor(options) {
     super(options);
     this.bindHandlers();
-    this.state = this.buildInitialState();
+    this.state = {};
   }
 
   bindHandlers() {

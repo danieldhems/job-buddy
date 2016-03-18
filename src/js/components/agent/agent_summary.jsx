@@ -7,7 +7,7 @@ import ItemActions from '../../actions/item_actions';
 import AgentForm from './agent_form';
 import ItemEditStore from '../../stores/item_edit_store';
 import EndPointConstants from '../../constants/end_point_constants';
-import ActionInterestTypes from '../../constants/interest_types';
+import ActionSourceTypes from '../../constants/source_types';
 import AbstractComponent from '../abstract_component';
 
 export default class AgentSummary extends AbstractComponent {
@@ -29,7 +29,6 @@ export default class AgentSummary extends AbstractComponent {
 	
 	getStateFromStore(){
 		const ItemEditStoreCurrentState = ItemEditStore.getState();
-		console.log(ItemEditStoreCurrentState)
 		this.setState({
 			isEditing: ItemEditStoreCurrentState.isEditing && ItemEditStoreCurrentState.itemDataInEdit.id === this.state.itemData.id,
 			itemData: ItemEditStoreCurrentState.itemDataInEdit && ItemEditStoreCurrentState.itemDataInEdit.id === this.state.itemData.id ? ItemEditStoreCurrentState.itemDataInEdit : this.props.initialItemData
@@ -41,12 +40,11 @@ export default class AgentSummary extends AbstractComponent {
 	}
 
 	buildInitialState(){
-		console.log('state', this.state);
 		this.setState({isEditing:false, itemData: this.props.initialItemData});
 	}
 
 	deleteAgent(){
-		CrudActions.delete(EndPointConstants.AGENT_END_POINT, this.state.itemData.id, ActionInterestTypes.AGENT);
+		CrudActions.delete(EndPointConstants.AGENT_END_POINT, this.state.itemData.id, ActionSourceTypes.AGENT);
 	}
 
 	enterEditMode(){
@@ -59,7 +57,6 @@ export default class AgentSummary extends AbstractComponent {
 	}
 
 	render(){
-		console.log('Rendering agent summary component');
 		if(this.state.itemData && !this.state.isEditing){
 			return (
 				<div>

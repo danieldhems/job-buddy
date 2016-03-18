@@ -6,7 +6,6 @@ export default class AbstractComponent extends Component {
 		super();
 		this.state = {};
 		this.bindListeners();
-		this.addListeners();
 	}
 
 	componentWillUnmount() {
@@ -14,6 +13,7 @@ export default class AbstractComponent extends Component {
 	}
 
 	componentDidMount(){
+		this.addListeners();
 		this.buildInitialState();
 		this._requestContent();
 	}

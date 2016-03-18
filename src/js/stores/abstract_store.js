@@ -9,14 +9,20 @@ class AbstractStore extends EventEmitter {
 	}
 
 	bindAll(context){
-		this.updateItems = this.updateItems.bind(context);
+		this.setItems = this.setItems.bind(context);
 		this.updateItem = this.updateItem.bind(context);
+		this.addItem = this.addItem.bind(context);
 		this.getAll = this.getAll.bind(context);
 		this.getAllFiltered = this.getAllFiltered.bind(context);
 		this.getById = this.getById.bind(context);
+		this.removeItem = this.removeItem.bind(context);
 	}
 
-	updateItems(items){
+	addItem(item){
+		this._items.push(item);
+	}
+
+	setItems(items){
 		this._items = items;
 	}
 
@@ -26,10 +32,10 @@ class AbstractStore extends EventEmitter {
 		});
 	}
 
-	removeItem(id){
-		this._items.map((x,i)=>{
-			if(x['id']===item['id']) this._items.splice(i,1);
-		});		
+	removeItem(payload){
+		let id = payload.id;
+		let removeIndex = this._items.findIndex(item=>item.id===id);
+		this._items.splice(removeIndex,1);
 	}
 
 	getAll(){
@@ -38,13 +44,12 @@ class AbstractStore extends EventEmitter {
 	}
 
 	getById(id){
-		return this._items.find(item=>item[id]===id)
+		return this._items.find(item=>item.id===id)
 	}
 
 	getAllFiltered(filterBy){
 		console.log(this.getAll())
 		return this.getAll().forEach(item=>this._filterObjectByKeys(item, filterBy))
-		// return this._filterObjectByKeys(this.getAll(), filterBy);
 	}
 
 	_filterObjectByKeys(obj, targetKeys){

@@ -7,7 +7,7 @@ import ListItem from '../common/list_item';
 import RoleSummary from './role_summary';
 import RoleForm from './role_form';
 import EndPointConstants from '../../constants/end_point_constants';
-import ActionInterestConstants from '../../constants/interest_types';
+import ActionSourceConstants from '../../constants/source_types';
 import AbstractComponent from '../abstract_component';
 
 export default class RoleList extends AbstractComponent {
@@ -38,7 +38,7 @@ export default class RoleList extends AbstractComponent {
 	}
 
 	_requestContent(){
-		CrudActions.fetch(EndPointConstants.ROLE_END_POINT, ActionInterestConstants.ROLE);
+		CrudActions.fetch(EndPointConstants.ROLE_END_POINT, ActionSourceConstants.ROLE);
 	}
 
 	render(){

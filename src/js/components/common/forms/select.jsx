@@ -7,16 +7,11 @@ export default class Select extends Component{
   constructor(options) {
     super(options);
     this.bindHandlers();
-    this.state = this.buildInitialState();
+    this.state = {};
   }
 
   bindHandlers() {
     this.handleInputChange = this.handleInputChange.bind(this);
-  }
-
-  buildInitialState() {
-    return {
-    }
   }
 
   handleInputChange(event) {
@@ -35,6 +30,7 @@ export default class Select extends Component{
         disabled={this.props.disabled}
         onChange={this.handleInputChange}
       >
+        <SelectOption key="0" value="">Select</SelectOption>
         {this.props.items.map( item => {
           return (<SelectOption key={item.id} value={item[this.props.valueIdentifier]}>{item[this.props.textIdentifier]}</SelectOption>) 
         })}
@@ -48,7 +44,8 @@ Select.propTypes = {
   className: PropTypes.string,
   name: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
-  classNames: PropTypes.array
+  classNames: PropTypes.array,
+  items: PropTypes.array
 }
 
 Select.defaultProps = {
@@ -56,5 +53,5 @@ Select.defaultProps = {
   className: '',
   classNames:[],
   children: [],
-  selectedMonth: 1
+  items: []
 }

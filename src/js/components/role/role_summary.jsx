@@ -8,6 +8,7 @@ import RoleForm from './role_form';
 import EndPointConstants from '../../constants/end_point_constants';
 import ItemEditStore from '../../stores/item_edit_store';
 import AbstractComponent from '../abstract_component';
+import ActionSourceTypes from '../../constants/source_types';
 
 export default class RoleSummary extends AbstractComponent {
 	constructor(props){
@@ -54,7 +55,7 @@ export default class RoleSummary extends AbstractComponent {
 	}
 
 	delete(){
-		CrudActions.delete(EndPointConstants.ROLE_END_POINT, this.state.itemData.id);
+		CrudActions.delete(EndPointConstants.ROLE_END_POINT, this.state.itemData.id, ActionSourceTypes.ROLE);
 	}
 
 	enterEditMode(){

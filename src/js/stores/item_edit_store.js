@@ -57,6 +57,12 @@ class ItemEditStore extends AbstractStore {
 					this.exitEditMode();
 					this.emit('change');
 					break;
+				case WebServiceTypes.ON_DELETE_REQUEST_SUCCESS:
+					console.log('Item store receive action: ', WebServiceTypes.ON_PUT_REQUEST_SUCCESS, 'with payload: ', action.payload);
+					this.resetItemDataInEdit();
+					this.exitEditMode();
+					this.emit('change');
+					break;
 				default:
 			}
 		})

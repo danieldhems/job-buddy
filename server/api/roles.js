@@ -42,7 +42,7 @@ var api = {
 		}
 		db.query(query, function(err, rows){
 			if(err) throw new Error(err);
-			res.json(rows.length > 1 ? rows : rows[0]);
+			res.json(rows);
 		});
 	},
 	update: function(req, res){

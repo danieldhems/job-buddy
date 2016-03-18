@@ -8,6 +8,7 @@ import InterviewForm from './interview_form';
 import EndPointConstants from '../../constants/end_point_constants';
 import ItemEditStore from '../../stores/item_edit_store';
 import AbstractComponent from '../abstract_component';
+import ActionSourceTypes from '../../constants/source_types';
 
 export default class InterviewSummary extends AbstractComponent {
 	constructor(props){
@@ -53,8 +54,8 @@ export default class InterviewSummary extends AbstractComponent {
 		this.getEditingState();
 	}
 
-	delete(){
-		CrudActions.delete(EndPointConstants.INTERVIEW_END_POINT, this.state.itemData.id);
+	delete(){		
+		CrudActions.delete(EndPointConstants.INTERVIEW_END_POINT, this.state.itemData.id, ActionSourceTypes.INTERVIEW);
 	}
 
 	enterEditMode(){
@@ -66,21 +67,36 @@ export default class InterviewSummary extends AbstractComponent {
 		ItemActions.cancelEditing();
 	}
 
+	getInterviewType(type){
+		switch(type){
+			case 1:
+				return 'Phone';
+				break;
+			case 2:
+				return 'Face-to-face';
+				break;
+		}
+	}
+
 	render(){
-		// console.log('Rendering interview summary component with itemData: ', this.state.itemData);
 		if(this.state.itemData && !this.state.isEditing){
+			const interviewType = this.getInterviewType(this.state.itemData.type);
 			return (
 				<div>
-					<Label className="interview__titleLabel">Title</Label><br/>
+					<Label className="interview__datetimeLabel">Date / time</Label><br/>
+					<Text className="interview__datetimeText">{this.state.itemData.datetime}</Text><br/>
+					<Label className="interview__titleLabel">Role title</Label><br/>
 					<Text className="interview__titleText">{this.state.itemData.title}</Text><br/>
-					<Label className="interview__clientLabel">Client</Label><br/>
-					<Text className="interview__clientText">{this.state.itemData.client}</Text><br/>
+					<Label className="interview__roleLabel">Client</Label><br/>
+					<Text className="interview__roleText">{this.state.itemData.client}</Text><br/>
 					<Label className="interview__salaryLabel">Salary</Label><br/>
 					<Text className="interview__salaryText">{this.state.itemData.salary}</Text><br/>
 					<Label className="interview__locationLabel">Location</Label><br/>
 					<Text className="interview__locationText">{this.state.itemData.location}</Text><br/>
+					<Label className="interview__typeLabel">Type</Label><br/>
+					<Text className="interview__typeText">{interviewType}</Text><br/>
 					<Label className="interview__interviewStageLabel">Interview Stage</Label><br/>
-					<Text className="interview__interviewStageText">{this.state.itemData.interview_stage}</Text><br/>
+					<Text className="interview__interviewStageText">{this.state.itemData.stage}</Text><br/>
 					<Label className="interview__agentNameLabel">Agent</Label><br/>
 					<Text className="interview__agentNameText">{this.state.itemData.agent_name}</Text><br/>
 					<Button onClick={this.delete.bind(this)}>Remove</Button>

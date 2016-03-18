@@ -7,7 +7,7 @@ import ListItem from '../common/list_item';
 import InterviewSummary from './interview_summary';
 import InterviewForm from './interview_form';
 import EndPointConstants from '../../constants/end_point_constants';
-import ActionInterestConstants from '../../constants/interest_types';
+import ActionSourceConstants from '../../constants/source_types';
 import AbstractComponent from '../abstract_component';
 
 export default class InterviewList extends AbstractComponent {
@@ -39,7 +39,7 @@ export default class InterviewList extends AbstractComponent {
 	}
 
 	_requestContent(){
-		CrudActions.fetch(EndPointConstants.INTERVIEW_END_POINT, ActionInterestConstants.INTERVIEW);
+		CrudActions.fetch(EndPointConstants.INTERVIEW_END_POINT, ActionSourceConstants.INTERVIEW);
 	}
 
 	render(){

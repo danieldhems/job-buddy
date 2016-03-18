@@ -11,17 +11,15 @@ import AgentSummary from './agent_summary';
 import AgentForm from './agent_form';
 
 import EndPointConstants from '../../constants/end_point_constants';
-import ActionInterestConstants from '../../constants/interest_types';
+import ActionSourceConstants from '../../constants/source_types';
 
 export default class AgentList extends AbstractComponent {
 	constructor(){
 		super();
-		this.bindListeners();
 	}
 	
 	buildStateFromStores(){
 		this.setState({items: AgentStore.getAll()});
-		console.log('Items in state:', this.state.items)
 	}
 
 	bindListeners(){
@@ -42,17 +40,18 @@ export default class AgentList extends AbstractComponent {
 	}
 
 	_requestContent(){
-		CrudActions.fetch(EndPointConstants.AGENT_END_POINT, ActionInterestConstants.AGENT);
+		CrudActions.fetch(EndPointConstants.AGENT_END_POINT, ActionSourceConstants.AGENT);
 	}
 
 	render(){
 		if(this.state.items){
+			console.log(this.state.items)
 			return (
 				<div>
 					<List>
 						{this.state.items.map( (item, index) => {
 							return (
-								<ListItem key={index}>
+								<ListItem key={'item-'+index}>
 									<AgentSummary initialItemData={item} />
 								</ListItem>
 							)

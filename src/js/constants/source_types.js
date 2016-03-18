@@ -7,6 +7,7 @@ e.g. Many stores receive web service request actions, but the payload often won'
 */
 
 export default {
-	AGENT: 'InterestTypes.AGENT',
-	ROLE: 'InterestTypes.ROLE'
+	AGENT: 'SourceTypes.AGENT',
+	ROLE: 'SourceTypes.ROLE',
+	INTERVIEW: 'SourceTypes.INTERVIEW'
 }

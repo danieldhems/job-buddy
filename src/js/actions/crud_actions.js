@@ -3,7 +3,7 @@ import WebServiceTypes from '../constants/web_service_types';
 import WebServiceUtil from '../utils/web_service_util';
 
 export default {
-	fetch(endPoint, actionInterest){
+	fetch(endPoint, source){
 		WebServiceUtil.request(
 			endPoint,
 			'GET',
@@ -11,7 +11,8 @@ export default {
 			function(responseData){
 				ApplicationDispatcher.dispatch({
 					type: WebServiceTypes.ON_GET_REQUEST_SUCCESS,
-					payload: {responseData, actionInterest}
+					source: source,
+					payload: responseData
 				});
 			},
 			(error) => {
@@ -19,29 +20,25 @@ export default {
 			}
 		)
 	},
-	create(endPoint, formData){
-
+	create(endPoint, formData, source){
 		WebServiceUtil.request(
 			endPoint,
 			'POST',
 			formData,
 			function(responseData){
+				let updatedItem = Object.assign(formData, responseData);
 				ApplicationDispatcher.dispatch({
-					type: WebServiceTypes.ON_GET_REQUEST_SUCCESS,
-					payload: {responseData, actionInterest: action.payload.actionInterest}
+					type: WebServiceTypes.ON_POST_REQUEST_SUCCESS,
+					source: source,
+					payload: updatedItem
 				});
 			},
 			(error) => {
 				console.log(error);		
 			}
-		);
-
-		ApplicationDispatcher.dispatch({
-			type: WebServiceTypes.POST_REQUEST,
-			payload: {endPoint: endPoint, body: formData}
-		});
+		)
 	},
-	delete(endPoint, id, actionInterest){
+	delete(endPoint, id, source){
 		WebServiceUtil.request(
 			endPoint,
 			'DELETE',
@@ -49,7 +46,8 @@ export default {
 			function(responseData){
 				ApplicationDispatcher.dispatch({
 					type: WebServiceTypes.ON_DELETE_REQUEST_SUCCESS,
-					payload: {id, actionInterest}
+					source: source,
+					payload: {id}
 				});
 			},
 			(error) => {
@@ -57,7 +55,7 @@ export default {
 			}
 		);
 	},
-	update(endPoint, formData){
+	update(endPoint, formData, source){
 		WebServiceUtil.request(
 			endPoint,
 			'PUT',
@@ -71,6 +69,6 @@ export default {
 			(error) => {
 				console.log(error);		
 			}
-		);
+		)
 	}
 }
