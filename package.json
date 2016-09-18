@@ -33,6 +33,7 @@
   "dependencies": {
     "alt": "^0.18.1",
     "body-parser": "^1.14.1",
+    "bootstrap": "^3.3.6",
     "browserify": "^11.2.0",
     "classnames": "^2.2.3",
     "copy-webpack-plugin": "^1.1.1",

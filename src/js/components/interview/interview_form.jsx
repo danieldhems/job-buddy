@@ -28,7 +28,7 @@ export default class InterviewForm extends AbstractComponent {
 	}
 
 	componentDidMount() {
-		if(RoleStore.getAll().length === 0) CrudActions.fetch(EndPointConstants.ROLE_END_POINT, ActionSourceTypes.ROLE);
+			CrudActions.fetch(EndPointConstants.ROLE_END_POINT, ActionSourceTypes.ROLE);
 	}
 
 	bindListeners(){
@@ -85,7 +85,7 @@ export default class InterviewForm extends AbstractComponent {
 				<Input type="datetime-local" name="datetime" defaultValue={this.props.datetime || ""} className="form formNew form_newInterview__datetimeField" />
 				<br/>
 				<Text>For which role?</Text>
-				<Select name="role_id" items={this.state.roles || []} valueIdentifier="id" textIdentifier="title" />
+				<Select name="role_id" items={this.state.roles || []} defaultValue={this.props.role_id} valueIdentifier="id" textIdentifier="title" />
 				<br/>
 				<Text>Leave blank if you haven't created a role yet</Text>
 				<br/>
@@ -93,7 +93,7 @@ export default class InterviewForm extends AbstractComponent {
 				<Input type="text" name="contact" defaultValue={this.props.contact || ""} className="form formNew form_newInterview__contactField" />
 				<br/>
 				<Text>Phone or face-to-face?</Text>
-				<Select name="type" items={interviewTypes} valueIdentifier="id" textIdentifier="label" />
+				<Select name="type" items={interviewTypes} defaultValue={this.props.type} valueIdentifier="id" textIdentifier="label" />
 				<br/><br/>
 				<SubmitButton name="submitButton" defaultValue="Add" onClick={this.handleSubmit.bind(this)} />
 				<Button onClick={this.props.onCancel}>Cancel</Button>
