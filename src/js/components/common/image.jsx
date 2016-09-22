@@ -9,6 +9,7 @@ export default class Image extends Component{
     );
   }
 };
+
 Image.propTypes = {
   src: PropTypes.string,
   alt: PropTypes.string,
@@ -17,7 +18,8 @@ Image.propTypes = {
   classNames: PropTypes.array,
   onClick: PropTypes.func,
   children: PropTypes.node
-}
+};
+
 Image.defaultProps = {
   src: '',
   alt: '',
@@ -26,4 +28,4 @@ Image.defaultProps = {
   defaultClassName: 'fbra_image',
   classNames:[],
   onClick: function(event){}
-}
+};

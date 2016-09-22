@@ -1,17 +1,23 @@
 var mysql = require('mysql');
 
 var dbConfig = {
-	host: 'localhost',
-	database: 'job_buddy',
-	user: 'dhems',
-	password: 'Cat09021988'
+	host: 'eu-cdbr-west-01.cleardb.com',
+	database: 'heroku_d405d1e37757a91',
+	user: 'b6a494a947d9d5',
+	password: '0725c683'
 };
 
-var conn = mysql.createConnection(dbConfig);
+var dbConnURL = 'mysql://b6a494a947d9d5:0725c683@eu-cdbr-west-01.cleardb.com/heroku_d405d1e37757a91?reconnect=true';
+
+var conn = mysql.createConnection(dbConnURL);
 
 conn.connect( function(err){
 	if(err) throw new Error(err);
 	console.log('DB connected');
+});
+
+conn.on('error', function(err) {
+  console.log(err.code); // 'ER_BAD_DB_ERROR'
 });
 
 module.exports = conn;

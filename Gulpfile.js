@@ -12,7 +12,7 @@ gulp.task("copy-html", [], function() {
 });
 
 gulp.task("webpack", function(){
-	gulp.src('src/js/application.js')
+	gulp.src('src/js/main.js')
 	.pipe(webpack(require('./webpack.config.js')))
 	.pipe(gulp.dest('dist/'));
 })

@@ -5,7 +5,6 @@ import Button from '../common/button';
 import CrudActions from '../../actions/crud_actions';
 import ItemActions from '../../actions/item_actions';
 import AgentForm from './agent_form';
-import ItemEditStore from '../../stores/item_edit_store';
 import EndPointConstants from '../../constants/end_point_constants';
 import ActionSourceTypes from '../../constants/source_types';
 import AbstractComponent from '../abstract_component';
@@ -15,17 +14,7 @@ export default class AgentSummary extends AbstractComponent {
 		super();
 	}
 
-	bindListeners(){
-		this._onItemEditStoreChange = this._onItemEditStoreChange.bind(this);
-	}
-
-	addListeners(){
-		ItemEditStore.addListener('change', this._onItemEditStoreChange);
-	}
-
-	removeListeners(){
-		ItemEditStore.removeListener('change', this._onItemEditStoreChange);
-	}
+	
 	
 	getStateFromStore(){
 		const ItemEditStoreCurrentState = ItemEditStore.getState();

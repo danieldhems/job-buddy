@@ -1,4 +1,3 @@
-import ApplicationDispatcher from '../dispatcher';
 import WebServiceTypes from '../constants/web_service_types';
 import WebServiceUtil from '../utils/web_service_util';
 

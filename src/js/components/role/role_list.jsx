@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import ApplicationDispatcher from '../../dispatcher';
 import CrudActions from '../../actions/crud_actions';
-import RoleStore from '../../stores/role_store';
 import List from '../common/list';
 import ListItem from '../common/list_item';
 import RoleSummary from './role_summary';

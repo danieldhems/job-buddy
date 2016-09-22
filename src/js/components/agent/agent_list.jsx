@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import ApplicationDispatcher from '../../dispatcher';
-
-import AgentStore from '../../stores/agent_store';
 import CrudActions from '../../actions/crud_actions';
 
 import AbstractComponent from '../abstract_component';
