@@ -12,36 +12,13 @@ import Text from '../common/text';
 import form2js from '../../utils/form2js';
 import CrudActions from '../../actions/crud_actions';
 
-import RoleStore from '../../stores/role_store';
-
 import EndPointConstants from '../../constants/end_point_constants';
-import ActionSourceTypes from '../../constants/source_types';
-import InterviewTypes from '../../constants/interview_types';
 
 import AbstractComponent from '../abstract_component';
 
 export default class InterviewForm extends AbstractComponent {
 	constructor(){
 		super();
-		this.state = {};
-		this.addListeners();
-	}
-
-	componentDidMount() {
-			CrudActions.fetch(EndPointConstants.ROLE_END_POINT, ActionSourceTypes.ROLE);
-	}
-
-	bindListeners(){
-		this.onRoleStoreChange = this.onRoleStoreChange.bind(this);
-	}
-
-	addListeners(){
-		RoleStore.addListener('change', this.onRoleStoreChange);
-	}
-
-	onRoleStoreChange(){
-		console.log('getting roles')
-		this.setState({roles: RoleStore.getAll()});
 	}
 
 	handleSubmit(){

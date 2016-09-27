@@ -6,52 +6,11 @@ import CrudActions from '../../actions/crud_actions';
 import ItemActions from '../../actions/item_actions';
 import RoleForm from './role_form';
 import EndPointConstants from '../../constants/end_point_constants';
-import ItemEditStore from '../../stores/item_edit_store';
 import AbstractComponent from '../abstract_component';
-import ActionSourceTypes from '../../constants/source_types';
 
 export default class RoleSummary extends AbstractComponent {
 	constructor(props){
 		super(props);
-	}
-
-	bindListeners(){
-		this._onItemEditStoreChange = this._onItemEditStoreChange.bind(this);
-	}
-
-	addListeners(){
-		ItemEditStore.addListener('change', this._onItemEditStoreChange);
-	}
-	
-	removeListeners(){
-		ItemEditStore.removeListener('change', this._onItemEditStoreChange);	
-	}
-
-	buildInitialState(){
-		this.setState({isEditing:false, itemData: this.props.initialItemData});
-	}
-
-	getEditingState(){
-		const CurrentEditingState = ItemEditStore.getState();
-		let itemData, isEditing;
-
-		if(CurrentEditingState.itemDataInEdit && CurrentEditingState.itemDataInEdit.id === this.state.itemData.id){
-			itemData = CurrentEditingState.itemDataInEdit
-		} else {
-			itemData = this.props.initialItemData
-		}
-		
-		if(CurrentEditingState.isEditing && CurrentEditingState.itemDataInEdit.id === this.state.itemData.id){
-			isEditing = true;
-		} else {
-			isEditing = false;
-		}
-
-		this.setState({itemData, isEditing});
-	}
-
-	_onItemEditStoreChange(){
-		this.getEditingState();
 	}
 
 	delete(){
@@ -69,7 +28,7 @@ export default class RoleSummary extends AbstractComponent {
 
 	render(){
 		// console.log('Rendering role summary component with itemData: ', this.state.itemData);
-		if(this.state.itemData && !this.state.isEditing){
+		if(this.props.itemData && !this.props.isEditing){
 			return (
 				<div>
 					<Label className="role__titleLabel">Title</Label><br/>

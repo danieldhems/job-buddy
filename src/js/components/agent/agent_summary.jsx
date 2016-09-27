@@ -6,7 +6,6 @@ import CrudActions from '../../actions/crud_actions';
 import ItemActions from '../../actions/item_actions';
 import AgentForm from './agent_form';
 import EndPointConstants from '../../constants/end_point_constants';
-import ActionSourceTypes from '../../constants/source_types';
 import AbstractComponent from '../abstract_component';
 
 export default class AgentSummary extends AbstractComponent {

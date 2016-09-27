@@ -14,35 +14,9 @@ export default class AgentList extends AbstractComponent {
 	constructor(){
 		super();
 	}
-	
-	buildStateFromStores(){
-		this.setState({items: AgentStore.getAll()});
-	}
-
-	bindListeners(){
-		this._onAgentStoreChange = this._onAgentStoreChange.bind(this);
-	}
-
-	addListeners(){
-		AgentStore.addListener('change', this._onAgentStoreChange);
-	}
-
-	removeListeners(){
-		AgentStore.removeListener('change', this._onAgentStoreChange);
-	}
-
-	_onAgentStoreChange(){
-		console.log('AgentList component receive List Store change');
-		this.buildStateFromStores();
-	}
-
-	_requestContent(){
-		CrudActions.fetch(EndPointConstants.AGENT_END_POINT, ActionSourceConstants.AGENT);
-	}
 
 	render(){
 		if(this.state.items){
-			console.log(this.state.items)
 			return (
 				<div>
 					<List>

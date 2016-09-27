@@ -1,13 +1,13 @@
-import WebServiceTypes from '../constants/web_service_types';
-import WebServiceUtil from '../utils/web_service_util';
+import Application from '../reducers/application';
+
+const Store = createStore(Application);
 
 export default {
 	fetch(endPoint, source){
-		WebServiceUtil.request(
+		fetch(
 			endPoint,
 			'GET',
-			null,
-			function(responseData){
+			(responseData) => {
 				ApplicationDispatcher.dispatch({
 					type: WebServiceTypes.ON_GET_REQUEST_SUCCESS,
 					source: source,
@@ -20,11 +20,11 @@ export default {
 		)
 	},
 	create(endPoint, formData, source){
-		WebServiceUtil.request(
+		fetch(
 			endPoint,
 			'POST',
 			formData,
-			function(responseData){
+			(responseData) => {
 				let updatedItem = Object.assign(formData, responseData);
 				ApplicationDispatcher.dispatch({
 					type: WebServiceTypes.ON_POST_REQUEST_SUCCESS,
@@ -38,11 +38,11 @@ export default {
 		)
 	},
 	delete(endPoint, id, source){
-		WebServiceUtil.request(
+		fetch(
 			endPoint,
 			'DELETE',
 			{id},
-			function(responseData){
+			(responseData) => {
 				ApplicationDispatcher.dispatch({
 					type: WebServiceTypes.ON_DELETE_REQUEST_SUCCESS,
 					source: source,
@@ -55,11 +55,11 @@ export default {
 		);
 	},
 	update(endPoint, formData, source){
-		WebServiceUtil.request(
+		fetch(
 			endPoint,
 			'PUT',
 			formData,
-			function(responseData){
+			(responseData) => {
 				ApplicationDispatcher.dispatch({
 					type: WebServiceTypes.ON_PUT_REQUEST_SUCCESS,
 					payload: {responseData}

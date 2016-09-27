@@ -11,30 +11,11 @@ import SubmitButton from '../common/forms/submit-button';
 import Text from '../common/text';
 import form2js from '../../utils/form2js';
 import CrudActions from '../../actions/crud_actions';
-import AgentStore from '../../stores/agent_store';
-import EndPointConstants from '../../constants/end_point_constants';
-import ActionSourceTypes from '../../constants/source_types';
 import AbstractComponent from '../abstract_component';
 
 export default class RoleForm extends AbstractComponent {
 	constructor(){
 		super();
-		this.state = {};
-		this.addListeners();
-		this.bindListeners();
-		if(AgentStore.getAll().length === 0) CrudActions.fetch(EndPointConstants.AGENT_END_POINT, ActionSourceTypes.AGENT);
-	}
-
-	bindListeners(){
-		this.onAgentStoreChange = this.onAgentStoreChange.bind(this);
-	}
-
-	addListeners(){
-		AgentStore.addListener('change', this.onAgentStoreChange);
-	}
-
-	onAgentStoreChange(data){
-		this.setState({agents: AgentStore.getAll()});
 	}
 
 	handleSubmit(){

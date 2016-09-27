@@ -6,9 +6,7 @@ import CrudActions from '../../actions/crud_actions';
 import ItemActions from '../../actions/item_actions';
 import InterviewForm from './interview_form';
 import EndPointConstants from '../../constants/end_point_constants';
-import ItemEditStore from '../../stores/item_edit_store';
 import AbstractComponent from '../abstract_component';
-import ActionSourceTypes from '../../constants/source_types';
 
 export default class InterviewSummary extends AbstractComponent {
 	constructor(props){

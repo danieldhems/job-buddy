@@ -1,4 +1,0 @@
-export default {
-	ONE_AGENT_REQUEST: 'WebServiceTypes.ON_ONE_AGENT_REQUEST',
-	ALL_AGENT_REQUEST: 'WebServiceTypes.ON_ALL_AGENT_REQUEST',
-}
