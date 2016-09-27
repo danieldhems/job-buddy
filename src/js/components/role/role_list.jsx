@@ -13,7 +13,7 @@ export default class RoleList extends AbstractComponent {
 	}
 
 	render(){
-		if(this.state.items){
+		if(this.props.items){
 			return (
 				<div>
 					<List>

@@ -8,7 +8,6 @@ import AgentSummary from './agent_summary';
 import AgentForm from './agent_form';
 
 import EndPointConstants from '../../constants/end_point_constants';
-import ActionSourceConstants from '../../constants/source_types';
 
 export default class AgentList extends AbstractComponent {
 	constructor(){

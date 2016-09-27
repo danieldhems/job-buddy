@@ -1,7 +1,5 @@
 import Application from '../reducers/application';
 
-const Store = createStore(Application);
-
 export default {
 	fetch(endPoint, source){
 		fetch(

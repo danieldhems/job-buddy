@@ -9,7 +9,6 @@ import SubmitButton from '../common/forms/submit-button';
 import Text from '../common/text';
 import form2js from '../../utils/form2js';
 import CrudActions from '../../actions/crud_actions';
-import ActionSourceConstants from '../../constants/source_types';
 import EndPointConstants from '../../constants/end_point_constants';
 
 import AbstractComponent from '../abstract_component';
