@@ -3,7 +3,7 @@ import { Router, RouteHandler, Link } from 'react-router';
 
 export default class Application extends Component {
 	constructor(){
-		super()
+		super();
 	}
 
 	render(){
@@ -22,7 +22,6 @@ export default class Application extends Component {
 				    </li>
 				  </ul>
 				</nav>
-				{this.props.children}
 			</div>
 		)
 	}

@@ -11,9 +11,8 @@ import SubmitButton from '../common/forms/submit-button';
 import Text from '../common/text';
 import form2js from '../../utils/form2js';
 import CrudActions from '../../actions/crud_actions';
-import AbstractComponent from '../abstract_component';
 
-export default class RoleForm extends AbstractComponent {
+export default class RoleForm extends Component {
 	constructor(){
 		super();
 	}

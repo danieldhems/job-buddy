@@ -6,31 +6,13 @@ import CrudActions from '../../actions/crud_actions';
 import ItemActions from '../../actions/item_actions';
 import InterviewForm from './interview_form';
 import EndPointConstants from '../../constants/end_point_constants';
-import AbstractComponent from '../abstract_component';
 
-export default class InterviewSummary extends AbstractComponent {
+export default class InterviewSummary extends Component {
 	constructor(props){
 		super(props);
 	}
 
-	bindListeners(){
-		this._onItemEditStoreChange = this._onItemEditStoreChange.bind(this);
-	}
-
-	addListeners(){
-		ItemEditStore.addListener('change', this._onItemEditStoreChange);
-	}
-	
-	removeListeners(){
-		ItemEditStore.removeListener('change', this._onItemEditStoreChange);	
-	}
-
-	buildInitialState(){
-		this.setState({isEditing:false, itemData: this.props.initialItemData});
-	}
-
 	getEditingState(){
-		const CurrentEditingState = ItemEditStore.getState();
 		let itemData, isEditing;
 
 		if(CurrentEditingState.itemDataInEdit && CurrentEditingState.itemDataInEdit.id === this.state.itemData.id){
@@ -46,10 +28,6 @@ export default class InterviewSummary extends AbstractComponent {
 		}
 
 		this.setState({itemData, isEditing});
-	}
-
-	_onItemEditStoreChange(){
-		this.getEditingState();
 	}
 
 	delete(){		

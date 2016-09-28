@@ -11,9 +11,7 @@ import form2js from '../../utils/form2js';
 import CrudActions from '../../actions/crud_actions';
 import EndPointConstants from '../../constants/end_point_constants';
 
-import AbstractComponent from '../abstract_component';
-
-export default class AgentForm extends AbstractComponent {
+export default class AgentForm extends Component {
 	constructor(){
 		super();
 	}

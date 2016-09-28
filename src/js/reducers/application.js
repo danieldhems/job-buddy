@@ -1,4 +1,4 @@
-export default (state, action) => {
+export default (state = {}, action) => {
 	switch(action.type){
 		case 'GET':
 			switch( action.source ){
@@ -13,5 +13,8 @@ export default (state, action) => {
 				default:
 					return state;
 			}
+			break;
+		default:
+			return state;
 	}
 }

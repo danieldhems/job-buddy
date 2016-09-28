@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import CrudActions from '../../actions/crud_actions';
 
-import AbstractComponent from '../abstract_component';
 import List from '../common/list';
 import ListItem from '../common/list_item';
 import AgentSummary from './agent_summary';
@@ -9,29 +9,33 @@ import AgentForm from './agent_form';
 
 import EndPointConstants from '../../constants/end_point_constants';
 
-export default class AgentList extends AbstractComponent {
+class AgentList extends Component {
 	constructor(){
 		super();
 	}
 
 	render(){
-		if(this.state.items){
-			return (
-				<div>
-					<List>
-						{this.state.items.map( (item, index) => {
-							return (
-								<ListItem key={'item-'+index}>
-									<AgentSummary initialItemData={item} />
-								</ListItem>
-							)
-						})}
-					</List>
-					<AgentForm userAction="create" />
-				</div>
-			)
-		} else {
-			return null;
-		}
+		return (
+			<div>
+				<List>
+					{this.props.agents.map( (agent, index) => {
+						return (
+							<ListItem key={'item-'+index}>
+								<AgentSummary initialItemData={agent} />
+							</ListItem>
+						)
+					})}
+				</List>
+				<AgentForm userAction="create" />
+			</div>
+		)
 	}
-}
+};
+
+const mapStateToProps = (state) => {
+	return {
+		agents: state.agents
+	}
+};
+
+export default connect(mapStateToProps)(AgentList);

@@ -6,9 +6,8 @@ import CrudActions from '../../actions/crud_actions';
 import ItemActions from '../../actions/item_actions';
 import AgentForm from './agent_form';
 import EndPointConstants from '../../constants/end_point_constants';
-import AbstractComponent from '../abstract_component';
 
-export default class AgentSummary extends AbstractComponent {
+export default class AgentSummary extends Component {
 	constructor(){
 		super();
 	}
@@ -16,7 +15,6 @@ export default class AgentSummary extends AbstractComponent {
 	
 	
 	getStateFromStore(){
-		const ItemEditStoreCurrentState = ItemEditStore.getState();
 		this.setState({
 			isEditing: ItemEditStoreCurrentState.isEditing && ItemEditStoreCurrentState.itemDataInEdit.id === this.state.itemData.id,
 			itemData: ItemEditStoreCurrentState.itemDataInEdit && ItemEditStoreCurrentState.itemDataInEdit.id === this.state.itemData.id ? ItemEditStoreCurrentState.itemDataInEdit : this.props.initialItemData

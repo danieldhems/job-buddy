@@ -6,9 +6,8 @@ import CrudActions from '../../actions/crud_actions';
 import ItemActions from '../../actions/item_actions';
 import RoleForm from './role_form';
 import EndPointConstants from '../../constants/end_point_constants';
-import AbstractComponent from '../abstract_component';
 
-export default class RoleSummary extends AbstractComponent {
+export default class RoleSummary extends Component {
 	constructor(props){
 		super(props);
 	}

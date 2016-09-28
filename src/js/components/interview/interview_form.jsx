@@ -14,9 +14,7 @@ import CrudActions from '../../actions/crud_actions';
 
 import EndPointConstants from '../../constants/end_point_constants';
 
-import AbstractComponent from '../abstract_component';
-
-export default class InterviewForm extends AbstractComponent {
+export default class InterviewForm extends Component {
 	constructor(){
 		super();
 	}
