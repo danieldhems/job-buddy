@@ -1,39 +1,36 @@
 import Application from '../reducers/application';
+import Store from '../store';
+import ENV from '../environment';
 
 export default {
-	fetch(endPoint, source){
-		fetch(
-			endPoint,
-			'GET',
-			(responseData) => {
-				ApplicationDispatcher.dispatch({
-					type: WebServiceTypes.ON_GET_REQUEST_SUCCESS,
-					source: source,
-					payload: responseData
-				});
-			},
-			(error) => {
-				console.log(error);		
-			}
-		)
+	hydrate(contentType){
+		const url = ENV.dev.api + contentType;
+		fetch(url).then( (response) => {
+			Store.dispatch({
+				type: 'hydrate',
+				source: contentType,
+				payload: responseData
+			});
+		}).catch( (error) => {
+			console.log(error);	
+		})
 	},
-	create(endPoint, formData, source){
-		fetch(
-			endPoint,
-			'POST',
-			formData,
-			(responseData) => {
-				let updatedItem = Object.assign(formData, responseData);
-				ApplicationDispatcher.dispatch({
-					type: WebServiceTypes.ON_POST_REQUEST_SUCCESS,
-					source: source,
-					payload: updatedItem
-				});
-			},
-			(error) => {
-				console.log(error);		
-			}
-		)
+	create(contentType, payload){
+		const url = ENV.dev.api + contentType;
+		const request = new Request(url, {
+			method: 'POST',
+			body: payload
+		});
+		fetch(request).then( (responseData) => {
+			let persistedItem = Object.assign(formData, responseData);
+			Store.dispatch({
+				type: 'create',
+				source: contentType,
+				payload: persistedItem
+			});
+		}).catch( (error) => {
+			console.log(error);		
+		})
 	},
 	delete(endPoint, id, source){
 		fetch(

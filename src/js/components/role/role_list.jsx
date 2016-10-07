@@ -12,6 +12,10 @@ class RoleList extends Component {
 		super();
 	}
 
+	componentDidMount() {
+		CrudActions.hydrate('roles');
+	}
+
 	render(){
 		return (
 			<div>
@@ -31,7 +35,6 @@ class RoleList extends Component {
 }
 
 const mapStateToProps = (state) => {
-	console.log(state)
 	return {
 		roles: state.roles
 	}

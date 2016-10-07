@@ -22,6 +22,7 @@ export default class Application extends Component {
 				    </li>
 				  </ul>
 				</nav>
+				{this.props.children}
 			</div>
 		)
 	}

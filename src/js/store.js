@@ -8,4 +8,10 @@ const initialState = {
 	offers: []
 };
 
-export default createStore(Application, initialState);
+const store = createStore(Application, initialState);
+
+store.subscribe( () => {
+	console.log(store.getState());
+});
+
+export default store;

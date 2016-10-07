@@ -21,7 +21,7 @@ export default class RoleForm extends Component {
 		let userData = form2js(ReactDOM.findDOMNode(this));
 		switch(this.props.userAction){
 			case 'create':
-				CrudActions.create(EndPointConstants.ROLE_END_POINT, userData, ActionSourceTypes.ROLE);
+				CrudActions.create('roles', userData);
 				break;
 			case 'update':
 				userData = Object.assign(userData, {id: this.props.id});
@@ -51,7 +51,7 @@ export default class RoleForm extends Component {
 				<Text>Location</Text>
 				<Input type="text" name="location" defaultValue={this.props.location || ""} className="form formNew form_newRole__locationField" />
 				<Text>Agent</Text>
-				<Select items={this.state.agents} name="agent_id" valueIdentifier="id" textIdentifier="name" />
+				<Select items={this.props.agents} name="agent_id" valueIdentifier="id" textIdentifier="name" />
 				<SubmitButton name="submitButton" defaultValue="Add" onClick={this.handleSubmit.bind(this)} />
 				<Button onClick={this.props.onCancel}>Cancel</Button>
 			</Form>

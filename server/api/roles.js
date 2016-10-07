@@ -10,7 +10,7 @@ var api = {
 		var data = req.body;
 		var tableName = req.baseUrl.substr( req.baseUrl.lastIndexOf('/')+1 );
 		// Create new role with insertId returned from creation of agent
-		db.query('INSERT INTO `'+tableName+'` SET ?', [data], (err, result) => {
+		db.query('INSERT INTO `roles` SET ?', [data], (err, result) => {
 			if(err) throw new Error(err);
 			if(result.affectedRows===1){
 				_insertId = result.insertId;
