@@ -4,12 +4,15 @@ import ENV from '../environment';
 
 export default {
 	hydrate(contentType){
+		console.log('hydrate called with content type', contentType);
 		const url = ENV.dev.api + contentType;
-		fetch(url).then( (response) => {
+		fetch(url)
+		.then( (response) => response.json() )
+		.then( (response) => {
 			Store.dispatch({
 				type: 'hydrate',
 				source: contentType,
-				payload: responseData
+				payload: response
 			});
 		}).catch( (error) => {
 			console.log(error);	
@@ -19,7 +22,10 @@ export default {
 		const url = ENV.dev.api + contentType;
 		const request = new Request(url, {
 			method: 'POST',
-			body: payload
+			headers: {
+				'content-type': 'application/json',
+			},
+			body: JSON.stringify(payload)
 		});
 		fetch(request).then( (responseData) => {
 			let persistedItem = Object.assign(formData, responseData);

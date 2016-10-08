@@ -1,4 +1,5 @@
 export default (state = {}, action) => {
+	console.log('Action dispatched:', action);
 	switch(action.type){
 		case 'hydrate':
 			switch( action.source ){

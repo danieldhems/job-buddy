@@ -8,11 +8,12 @@ var _insertId = null;
 var api = {
 	create: function(req, res){
 		var data = req.body;
-		var tableName = req.baseUrl.substr( req.baseUrl.lastIndexOf('/')+1 );
+		console.log(req.body);
 		// Create new role with insertId returned from creation of agent
 		db.query('INSERT INTO `roles` SET ?', [data], (err, result) => {
 			if(err) throw new Error(err);
 			if(result.affectedRows===1){
+				console.log(result);
 				_insertId = result.insertId;
 				api.read(req, res);
 			}
@@ -42,6 +43,7 @@ var api = {
 		}
 		db.query(query, function(err, rows){
 			if(err) throw new Error(err);
+			console.log('rows', rows);
 			res.json(rows);
 		});
 	},

@@ -5,7 +5,6 @@ import List from '../common/list';
 import ListItem from '../common/list_item';
 import RoleSummary from './role_summary';
 import RoleForm from './role_form';
-import EndPointConstants from '../../constants/end_point_constants';
 
 class RoleList extends Component {
 	constructor(){
@@ -23,7 +22,7 @@ class RoleList extends Component {
 					{this.props.roles.map( (role, index) => {
 						return (
 							<ListItem key={index}>
-								<RoleSummary initialItemData={role} />
+								<RoleSummary {...role} />
 							</ListItem>
 						)
 					})}
