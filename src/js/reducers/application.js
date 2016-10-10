@@ -18,17 +18,16 @@ export default (state = {}, action) => {
 		case 'create':
 			switch( action.source ){
 				case 'agents':
-					return Object.assign( {}, state, state.agents, action.payload );
+					return Object.assign( {}, state, {agents: [...state.agents, action.payload]} );
 				case 'roles':
-					return Object.assign( {}, state, state.roles, action.payload );
+					return Object.assign( {}, state, {roles: [...state.roles, action.payload]} );
 				case 'interviews':
-					return Object.assign( {}, state, state.interviews, action.payload );
+					return Object.assign( {}, state, {interviews: [...state.interviews, action.payload]} );
 				case 'offers':
-					return Object.assign( {}, state, state.offers, action.payload );
+					return Object.assign( {}, state, {offers: [...state.offers, action.payload]} );
 				default:
 					return state;
 			}
-			break;
 		default:
 			return state;
 	}

@@ -14,6 +14,10 @@ class AgentList extends Component {
 		super();
 	}
 
+	componentDidMount() {
+		CrudActions.hydrate('agents');
+	}
+
 	render(){
 		return (
 			<div>

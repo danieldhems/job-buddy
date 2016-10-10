@@ -1,13 +1,19 @@
+'use strict';
+
 var db = require('../database.js');
 var router = require('express').Router();
+
+var _insertId = null;
 
 var api = {
 	create: function(req, res){
 		var data = req.body;
 		db.query('INSERT INTO `agents` SET ?', [data], function(err, result){
-			console.log(err, result)
 			if(err) res.send(new Error(err));
-			if(result.affectedRows==1) res.json({id:result.insertId});
+			if(result.affectedRows===1){
+				_insertId = result.insertId;
+				api.read(req, res);
+			}
 		});
 	},
 	read: function(req, res){

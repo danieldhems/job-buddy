@@ -4,7 +4,6 @@ import ENV from '../environment';
 
 export default {
 	hydrate(contentType){
-		console.log('hydrate called with content type', contentType);
 		const url = ENV.dev.api + contentType;
 		fetch(url)
 		.then( (response) => response.json() )
@@ -28,7 +27,7 @@ export default {
 			body: JSON.stringify(payload)
 		});
 		fetch(request).then( (responseData) => {
-			let persistedItem = Object.assign(formData, responseData);
+			let persistedItem = Object.assign(payload, responseData);
 			Store.dispatch({
 				type: 'create',
 				source: contentType,

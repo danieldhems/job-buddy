@@ -8,12 +8,10 @@ var _insertId = null;
 var api = {
 	create: function(req, res){
 		var data = req.body;
-		console.log(req.body);
 		// Create new role with insertId returned from creation of agent
 		db.query('INSERT INTO `roles` SET ?', [data], (err, result) => {
 			if(err) throw new Error(err);
 			if(result.affectedRows===1){
-				console.log(result);
 				_insertId = result.insertId;
 				api.read(req, res);
 			}
@@ -39,12 +37,18 @@ var api = {
 		";
 		if(_insertId){
 			query += " AND roles.id = " + _insertId;
-			_insertId = null;
 		}
 		db.query(query, function(err, rows){
 			if(err) throw new Error(err);
 			console.log('rows', rows);
-			res.json(rows);
+			// If insertId is not null then we've just inserted a new record, so return only this new record, else return 
+			if(rows.length === 1 && _insertId){
+				// reset _insertId
+				_insertId = null;
+				res.json(rows[0]);
+			} else {
+				res.json(rows);
+			}
 		});
 	},
 	update: function(req, res){

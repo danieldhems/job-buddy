@@ -9,7 +9,6 @@ import SubmitButton from '../common/forms/submit-button';
 import Text from '../common/text';
 import form2js from '../../utils/form2js';
 import CrudActions from '../../actions/crud_actions';
-import EndPointConstants from '../../constants/end_point_constants';
 
 export default class AgentForm extends Component {
 	constructor(){
@@ -20,7 +19,7 @@ export default class AgentForm extends Component {
 		let userData = form2js(ReactDOM.findDOMNode(this));
 		switch(this.props.userAction){
 			case 'create':
-				CrudActions.create(EndPointConstants.AGENT_END_POINT, userData, ActionSourceConstants.AGENT);
+				CrudActions.create('agents', userData);
 				break;
 			case 'update':
 				userData = Object.assign(userData, {id: this.props.id});
