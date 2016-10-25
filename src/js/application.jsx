@@ -9,20 +9,28 @@ export default class Application extends Component {
 	render(){
 		return (
 			<div className="JobBuddyApplication">
-				<nav className="navigation">
-				  <ul>
-				    <li>
-				      <Link to="/roles">Roles</Link>
-				    </li>
-				    <li>
-				      <Link to="/interviews">Interviews</Link>
-				    </li>
-				    <li>
-				      <Link to="/agents">Agents</Link>
-				    </li>
-				  </ul>
-				</nav>
-				{this.props.children}
+				<div className="container">
+					<div className="row">
+						<div className="col-md-3">
+							<nav className="navigation">
+							  <ul>
+							    <li>
+							      <Link to="/roles">Roles</Link>
+							    </li>
+							    <li>
+							      <Link to="/interviews">Interviews</Link>
+							    </li>
+							    <li>
+							      <Link to="/agents">Agents</Link>
+							    </li>
+							  </ul>
+							</nav>
+						</div>
+						<div className="col-md-9">
+							{this.props.children}
+						</div>
+					</div>
+				</div>
 			</div>
 		)
 	}
