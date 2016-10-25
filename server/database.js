@@ -23,7 +23,7 @@ conn.connect( function(err){
 
 conn.on('error', function(err) {
   console.log(err.code);
-  reconnect(reconnect(conn));
+  reconnect(conn);
 });
 
 module.exports = conn;

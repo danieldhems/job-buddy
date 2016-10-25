@@ -21,6 +21,7 @@
     "copy-webpack-plugin": "^1.1.1",
     "gulp": "^3.9.0",
     "gulp-copy": "0.0.2",
+    "gulp-sass": "^2.3.2",
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.3.5",
     "mocha": "^3.0.2",
