@@ -1,0 +1,14 @@
+.role {
+	position: relative;
+
+	&:hover .role__options {
+		display: block;
+	}
+
+	&__options {
+		position: absolute;
+		right: 0;
+		top: 0;
+		display: none;
+	}
+}

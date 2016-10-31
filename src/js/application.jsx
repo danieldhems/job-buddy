@@ -11,7 +11,7 @@ export default class Application extends Component {
 			<div className="JobBuddyApplication">
 				<div className="container">
 					<div className="row">
-						<div className="col-md-3">
+						<div className="col-sm-3 col-md-3">
 							<nav className="navigation">
 							  <ul>
 							    <li>
@@ -26,7 +26,7 @@ export default class Application extends Component {
 							  </ul>
 							</nav>
 						</div>
-						<div className="col-md-9">
+						<div className="col-sm-9 col-md-9">
 							{this.props.children}
 						</div>
 					</div>

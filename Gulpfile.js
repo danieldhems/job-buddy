@@ -3,21 +3,30 @@ const gutil = require("gulp-util");
 const webpack = require("webpack-stream");
 const webpackConfig = require("./webpack.config.js");
 const sass = require("gulp-sass");
-const wiredep = require("wiredep").stream;
+const concat = require("gulp-concat");
 
 // The development server (the recommended option for development)
-gulp.task("default", ["copy-html", "webpack", "sass", "inject-vendor", "watch"]);
+gulp.task("default", ["copy-html", "copy-bootstrap", "webpack", "sass", "concat-vendor", "watch"]);
 
 gulp.task("copy-html", [], function() {
 	gulp.src('src/index.html')
 	.pipe(gulp.dest('dist/'));
 });
 
-gulp.task("inject-vendor", function(){
-	gulp.src('src/index.html')
-	.pipe(wiredep({}))
+gulp.task("copy-bootstrap", [], function() {
+	gulp.src('bower_components/bootstrap/dist/css/bootstrap.min.css')
+	.pipe(gulp.dest('dist/'));
+});
+
+gulp.task("concat-vendor", function(){
+	gulp.src([
+		"bower_components/jquery/dist/jquery.min.js",
+		"bower_components/bootstrap/dist/js/bootstrap.min.js",
+		"bower_components/moment/min/moment.min.js"
+	])
+	.pipe(concat('vendor.min.js'))
 	.pipe(gulp.dest("dist/"))
-})
+});
 
 gulp.task("sass", function(){
 	gulp.src(['src/css/sass/**/*.scss'])

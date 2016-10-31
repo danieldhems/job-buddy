@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Text from '../common/text';
 import Label from '../common/label';
+import Heading from '../common/heading';
 import Button from '../common/button';
 import CrudActions from '../../actions/crud_actions';
 import ItemActions from '../../actions/item_actions';
@@ -12,16 +13,16 @@ export default class RoleSummary extends Component {
 		super(props);
 	}
 
-	delete(){
-		// CrudActions.delete(EndPointConstants.ROLE_END_POINT, this.state.itemData.id, ActionSourceTypes.ROLE);
+	remove(){
+		CrudActions.remove('roles', this.props.id);
 	}
 
-	enterEditMode(){
+	startEditing(){
 		// Pass current item props to Item store for currentItem state
 		// ItemActions.startEditing(this.state.itemData);
 	}
 
-	cancelEditMode(){
+	cancelEditing(){
 		ItemActions.cancelEditing();
 	}
 
@@ -29,21 +30,18 @@ export default class RoleSummary extends Component {
 		// console.log('Rendering role summary component with itemData: ', this.state.itemData);
 		if(!this.props.isEditing){
 			return (
-				<div>
-					<Label className="role__titleLabel">Title</Label><br/>
-					<Text className="role__titleText">{this.props.title}</Text><br/>
-					<Label className="role__clientLabel">Client</Label><br/>
-					<Text className="role__clientText">{this.props.client}</Text><br/>
-					<Label className="role__salaryLabel">Salary</Label><br/>
-					<Text className="role__salaryText">{this.props.salary}</Text><br/>
-					<Label className="role__locationLabel">Location</Label><br/>
-					<Text className="role__locationText">{this.props.location}</Text><br/>
-					<Label className="role__interviewStageLabel">Interview Stage</Label><br/>
-					<Text className="role__interviewStageText">{this.props.interview_stage}</Text><br/>
-					<Label className="role__agentNameLabel">Agent</Label><br/>
-					<Text className="role__agentNameText">{this.props.agent_name}</Text><br/>
-					<Button onClick={this.delete.bind(this)}>Remove</Button>
-					<Button onClick={this.enterEditMode.bind(this)}>Edit</Button>
+				<div className="role">
+					<Heading level={3} className="role__titleLabel">{this.props.title} / {this.props.salary}</Heading>
+					<Label className="role__clientText">{this.props.client} / {this.props.location}</Label><br/>
+					<Text className="role__agentNameText">{this.props.agent_name} ({this.props.agent_phone_number})</Text><br/>
+					<div className="role__notes">
+						{this.props.notes}
+					</div>
+					<div className="role__options">
+						<Button >Add interview</Button>
+						<Button onClick={this.remove.bind(this)}>Remove</Button>
+						<Button onClick={this.startEditing.bind(this)}>Edit</Button>
+					</div>
 				</div>
 			)
 		} else {

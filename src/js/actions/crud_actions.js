@@ -37,22 +37,24 @@ export default {
 			console.log(error);		
 		})
 	},
-	delete(endPoint, id, source){
-		fetch(
-			endPoint,
-			'DELETE',
-			{id},
-			(responseData) => {
-				ApplicationDispatcher.dispatch({
-					type: WebServiceTypes.ON_DELETE_REQUEST_SUCCESS,
-					source: source,
-					payload: {id}
-				});
+	remove(contentType, id){
+		const url = ENV.dev.api + contentType;
+		const request = new Request(url, {
+			method: 'DELETE',
+			headers: {
+				'content-type': 'application/json',
 			},
-			(error) => {
-				console.log(error);		
-			}
-		);
+			body: JSON.stringify({id})
+		});
+		fetch(request).then( (responseData) => {
+			Store.dispatch({
+				type: 'remove',
+				id: id,
+				source: contentType
+			});
+		}).catch( (error) => {
+			console.log(error);		
+		})
 	},
 	update(endPoint, formData, source){
 		fetch(

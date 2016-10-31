@@ -25,10 +25,12 @@ var api = {
 				roles.client,\
 				roles.salary,\
 				roles.location,\
+				roles.notes,\
 				roles.archived,\
 				roles.agent_id,\
 				agents.name as `agent_name`,\
 				agents.company as `agent_company`,\
+				agents.phone_number as `agent_phone_number`,\
 				interviews.stage as `interview_stage`\
 			FROM `roles`\
 			LEFT JOIN `agents` ON roles.agent_id = agents.id\
