@@ -7,8 +7,8 @@ import EndPointConstants from '../../constants/end_point_constants';
 import RoleSummary from './role_summary';
 
 const mapDispatchToProps = (dispatch) => ({
-	remove: (id) =>  dispatch(remove('roles', id)),
-	update: () => dispatch(update(payload))
+	remove: (id) => dispatch(remove('roles', id)),
+	// update: (id, payload) => dispatch(update('roles', id, payload))
 }};
 
 const container = connect({}, mapDispatchToProps)(RoleSummary);

@@ -7,6 +7,7 @@ import Button from '../common/button';
 import RoleForm from './role_form';
 
 const RoleSummary = ({
+	id,
 	title,
 	salary,
 	client,
@@ -27,14 +28,14 @@ const RoleSummary = ({
 					{notes}
 				</div>
 				<div className="role__options">
-					<Button >Add interview</Button>
-					<Button onClick={this.remove.bind(this)}>Remove</Button>
-					<Button onClick={this.startEditing.bind(this)}>Edit</Button>
+					<Button>Add interview</Button>
+					<Button onClick={remove(id)}>Remove</Button>
+					<Button onClick={startEditing(id)}>Edit</Button>
 				</div>
 			</div>
 		)
 	} else {
-		return <RoleForm userAction="update" onCancel={this.cancelEditMode.bind(this)} {...this.state.itemData} />
+		return <RoleForm userAction="update" onCancel={cancelEditing(id)} {...this.props} />
 	}
 }
 
