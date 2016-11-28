@@ -9,78 +9,57 @@ import Textarea from '../common/forms/textarea';
 import Heading from '../common/heading';
 import SubmitButton from '../common/forms/submit-button';
 import Text from '../common/text';
-import form2js from '../../utils/form2js';
-import CrudActions from '../../actions/crud_actions';
 
-import EndPointConstants from '../../constants/end_point_constants';
+const getHeading = (actionType) => {
+	return actionType === 'update' ? 'Update interview' : "Add interview";
+};
 
-export default class InterviewForm extends Component {
-	constructor(){
-		super();
-	}
-
-	handleSubmit(){
-		let userData = form2js(ReactDOM.findDOMNode(this));
-		switch(this.props.userAction){
-			case 'create':
-				userData.type = parseInt(userData.type,10);
-				CrudActions.create(EndPointConstants.INTERVIEW_END_POINT, userData, ActionSourceTypes.INTERVIEW);
-				break;
-			case 'update':
-				userData = Object.assign(userData, {id: this.props.id});
-				CrudActions.update(EndPointConstants.INTERVIEW_END_POINT, userData, ActionSourceTypes.INTERVIEW);
-				break;
-			default:
-		}
-	}
-
-	getHeading(){
-		return this.props.userAction === 'create' ? 'New Interview'
-			: this.props.userAction === 'update' ? 'Edit Interview'
-			: "";
-	}
-
-	convertToArray(obj){
-		let arr = [];
-		for(let key in obj){
-			arr.push(
-				{id: obj[key]['id'], label: obj[key]['label']}
-			)
-		}
-		return arr;
-	}
-
-	render(){
-		const heading = this.getHeading();
-		const interviewTypes = this.convertToArray(InterviewTypes);
-		return (
-			<Form className="formNewInterview" ref="form">
-				<Heading level={2}>{heading}</Heading>
-				<Text>When?</Text>
-				<Input type="datetime-local" name="datetime" defaultValue={this.props.datetime || ""} className="form formNew form_newInterview__datetimeField" />
-				<br/>
-				<Text>For which role?</Text>
-				<Select name="role_id" items={this.state.roles || []} defaultValue={this.props.role_id} valueIdentifier="id" textIdentifier="title" />
-				<br/>
-				<Text>Leave blank if you haven't created a role yet</Text>
-				<br/>
-				<Text>Who are you meeting?</Text>
-				<Input type="text" name="contact" defaultValue={this.props.contact || ""} className="form formNew form_newInterview__contactField" />
-				<br/>
-				<Text>Phone or face-to-face?</Text>
-				<Select name="type" items={interviewTypes} defaultValue={this.props.type} valueIdentifier="id" textIdentifier="label" />
-				<br/><br/>
-				<SubmitButton name="submitButton" defaultValue="Add" onClick={this.handleSubmit.bind(this)} />
-				<Button onClick={this.props.onCancel}>Cancel</Button>
-			</Form>
-		)
-	}
+const InterviewForm = ({
+	roles,
+	roleId,
+	roleType,
+	dateTime,
+	heading,
+	interviewer,
+	onSubmit,
+	onCancel
+}) => {
+	<Form className="formNewInterview" ref="form">
+		<Heading level={2}>{heading}</Heading>
+		<Text>When?</Text>
+		<Input type="datetime-local" name="datetime" defaultValue={datetime || ""} className="form formNew form_newInterview__datetimeField" />
+		<br/>
+		<Text>For which role?</Text>
+		<Select name="role_id" items={roles} defaultValue={roleId} valueIdentifier="id" textIdentifier="title" />
+		<br/>
+		<Text>Leave blank if you havent created a role yet</Text>
+		<br/>
+		<Text>Who are you meeting?</Text>
+		<Input type="text" name="contact" defaultValue={interviewer} className="form formNew form_newInterview__contactField" />
+		<br/>
+		<Text>Phone or face-to-face?</Text>
+		<Select name="type" items={interviewTypes} defaultValue={roleType} valueIdentifier="id" textIdentifier="label" />
+		<br/><br/>
+		<SubmitButton defaultValue="Save" onClick={onSubmit} />
+		<Button onClick={onCancel}>Cancel</Button>
+	</Form>
 }
 
 InterviewForm.propTypes = {
-	heading: PropTypes.string
-}
+	heading: PropTypes.string,
+	roles: PropTypes.array,
+	roleId: PropTypes.number,
+	roleType: PropTypes.string,
+	interviewer: PropTypes.string,
+	onSubmit: PropTypes.function,
+	onCancel: PropTypes.function
+};
 
 InterviewForm.defaultProps = {
-	heading: "New interview"
-}
+	heading: "New interview",
+	roles: [],
+	onSubmit: () => {},
+	onCancel: () => {}
+};
+
+export default InterviewForm;
