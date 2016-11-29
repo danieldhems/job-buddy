@@ -5,6 +5,7 @@ import Label from '../common/label';
 import Heading from '../common/heading';
 import Button from '../common/button';
 import RoleForm from './role_form';
+import InterviewForm from '../interview/interview_form_container';
 
 const RoleSummary = ({
 	id,
@@ -15,8 +16,11 @@ const RoleSummary = ({
 	agent_name,
 	agent_phone_number,
 	notes,
-	isEditing
+	isEditing,
+	startEditing,
+	cancelEditing
 }) => {
+
 	// console.log('Rendering role summary component with itemData: ', this.state.itemData);
 	if(!isEditing){
 		return (
@@ -28,10 +32,11 @@ const RoleSummary = ({
 					{notes}
 				</div>
 				<div className="role__options">
-					<Button>Add interview</Button>
+					<Button onClick={openInterviewForm(id)}>Add interview</Button>
 					<Button onClick={remove(id)}>Remove</Button>
 					<Button onClick={startEditing(id)}>Edit</Button>
 				</div>
+				<InterviewForm roleId={id} />
 			</div>
 		)
 	} else {

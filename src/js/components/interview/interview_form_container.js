@@ -22,10 +22,10 @@ const onCancel = (dispatch) => {
 
 const mapStateToProps = (state) => {};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => ({
 	onSubmit: onSubmit(dispatch),
 	onCancel: onCancel(dispatch) 
-};
+});
 
 const container = connect(mapStateToProps, mapDispatchToProps)(InterviewForm);
 

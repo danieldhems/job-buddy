@@ -4,13 +4,19 @@ const webpack = require("webpack-stream");
 const webpackConfig = require("./webpack.config.js");
 const sass = require("gulp-sass");
 const concat = require("gulp-concat");
+const clean = require("gulp-clean");
 
 // The development server (the recommended option for development)
-gulp.task("default", ["copy-html", "copy-bootstrap", "webpack", "sass", "concat-vendor", "watch"]);
+gulp.task("default", ["clean", "webpack", "copy-bootstrap", "sass", "concat-js", "concat-css", "copy-html", "watch"]);
 
 gulp.task("copy-html", [], function() {
 	gulp.src('src/index.html')
 	.pipe(gulp.dest('dist/'));
+});
+
+gulp.task("clean", function(){
+	gulp.src("dist", {read: false})
+	.pipe(clean())
 });
 
 gulp.task("copy-bootstrap", [], function() {
@@ -18,7 +24,7 @@ gulp.task("copy-bootstrap", [], function() {
 	.pipe(gulp.dest('dist/'));
 });
 
-gulp.task("concat-vendor", function(){
+gulp.task("concat-js", function(){
 	gulp.src([
 		"bower_components/jquery/dist/jquery.min.js",
 		"bower_components/bootstrap/dist/js/bootstrap.min.js",
@@ -28,10 +34,18 @@ gulp.task("concat-vendor", function(){
 	.pipe(gulp.dest("dist/"))
 });
 
+gulp.task("concat-css", function(){
+	gulp.src([
+		"bower_components/bootstrap/dist/css/bootstrap.min.css",
+	])
+	.pipe(concat('vendor.min.css'))
+	.pipe(gulp.dest("dist/"))
+});
+
 gulp.task("sass", function(){
 	gulp.src(['src/css/sass/**/*.scss'])
 	.pipe(sass().on('error', sass.logError))
-	.pipe(gulp.dest('dist/css'));
+	.pipe(gulp.dest('dist/'));
 })
 
 gulp.task("webpack", function(){
