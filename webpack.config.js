@@ -17,14 +17,9 @@ module.exports = {
 		          presets: ['es2015', 'react']
 		        }
 		    }
-	  	],
-		plugins: [
-			new CopyWebpackPlugin([
-				{from: '.\\src\\index.html', to: '.\\dist\\index.html'}
-			])
-		],
+	  	]
 	},
 	resolve: {
-	    extensions: ['', '.js', '.jsx']
-	  }
+		extensions: ['', '.js', '.jsx']
+	}
 }

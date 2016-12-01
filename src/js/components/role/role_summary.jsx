@@ -7,6 +7,10 @@ import Button from '../common/button';
 import RoleForm from './role_form';
 import InterviewForm from '../interview/interview_form_container';
 
+const isAddingInterview = false;
+
+const toggleIsAddingInterview = (isAddingInterview) => !isAddingInterview;
+
 const RoleSummary = ({
 	id,
 	title,
@@ -18,7 +22,7 @@ const RoleSummary = ({
 	notes,
 	isEditing,
 	startEditing,
-	cancelEditing
+	remove
 }) => {
 
 	// console.log('Rendering role summary component with itemData: ', this.state.itemData);
@@ -32,15 +36,15 @@ const RoleSummary = ({
 					{notes}
 				</div>
 				<div className="role__options">
-					<Button onClick={openInterviewForm(id)}>Add interview</Button>
+					<Button onClick={toggleIsAddingInterview(isAddingInterview)}>Add interview</Button>
 					<Button onClick={remove(id)}>Remove</Button>
 					<Button onClick={startEditing(id)}>Edit</Button>
 				</div>
-				<InterviewForm roleId={id} />
+				<InterviewForm roleId={id} isActive={isAddingInterview} />
 			</div>
 		)
 	} else {
-		return <RoleForm userAction="update" onCancel={cancelEditing(id)} {...this.props} />
+		return <RoleForm userAction="update" {...this.props} />
 	}
 }
 

@@ -22,8 +22,10 @@ const InterviewForm = ({
 	heading,
 	interviewer,
 	onSubmit,
-	onCancel
+	onCancel,
+	isActive
 }) => {
+	return isActive &&
 	<Form className="formNewInterview" ref="form">
 		<Heading level={2}>{heading}</Heading>
 		<Text>When?</Text>

@@ -6,8 +6,7 @@ const sass = require("gulp-sass");
 const concat = require("gulp-concat");
 const clean = require("gulp-clean");
 
-// The development server (the recommended option for development)
-gulp.task("default", ["clean", "webpack", "copy-bootstrap", "sass", "concat-js", "concat-css", "copy-html", "watch"]);
+gulp.task("default", ["clean", "copy-bootstrap", "sass", "concat-js", "concat-css", "copy-html","webpack", "watch"]);
 
 gulp.task("copy-html", [], function() {
 	gulp.src('src/index.html')
